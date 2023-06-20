@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Thế Giới Laptop</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+        <link rel="stylesheet" href="./assets/css/base.css" />
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <header class="header">
+                <div class="header__top">
+                    <a href="index.html" class="header__top-logo">
+                        <img
+                            class="header__top-logo-img"
+                            src="https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-The-Gioi-Di-Dong-MWG-B-H.png"
+                        />
+                    </a>
+                    <div class="header__top-place">
+                        <div class="header__top-place--left">
+                            <p class="header__top-place-title">Xem giá, tồn kho tại:</p>
+                            <p class="header__top-place-location">Hồ Chí Minh</p>
+                        </div>
+                        <div class="header__top-place--right">
+                            <i class="header__top-place-icon fa-solid fa-caret-down"></i>
+                        </div>
+                    </div>
+                    <div class="header__top-search">
+                        <input type="text" class="header__top-search-input" placeholder="Bạn tìm gì..." />
+                        <button class="header__top-search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                    <div class="header__top-oder-infor">
+                        <p class="header__top-oder-infor-title">Tài khoản & Đơn hàng</p>
+                    </div>
+                    <a href="cart.html" class="header__top-cart" id="cart">
+                        <i class="header__top-cart-icon fa-brands fa-opencart"></i>
+                        <div class="header__top-cart-number"></div>
+                        <p class="header__top-cart-title">Giỏ hàng</p>
+                    </a>
+                    <div class="header__top-news">
+                        <p class="header__top-news-item">24h Công nghệ</p>
+                        <div class="header__top-news-split"></div>
+                        <p class="header__top-news-item">Hỏi Đáp</p>
+                        <div class="header__top-news-split"></div>
+                        <p class="header__top-news-item">Game App</p>
+                    </div>
+                </div>
+                <ul class="nav__items">
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <i class="nav__item-icon fa-solid fa-mobile-screen"></i>
+                            <p class="nav__item-title">Điện thoại</p>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <i class="nav__item-icon fa-solid fa-laptop"></i>
+                            <p class="nav__item-title">Laptop</p>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <i class="nav__item-icon fa-solid fa-tablet-screen-button"></i>
+                            <p class="nav__item-title">Tablet</p>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <i class="nav__item-icon fa-solid fa-headphones"></i>
+                            <p class="nav__item-title">Phụ kiện</p>
+                            <i class="nav__item-icon fa-solid fa-caret-down"></i>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <i class="nav__item-icon fa-solid fa-stopwatch"></i>
+                            <p class="nav__item-title">Smartwatch</p>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <i class="nav__item-icon fa-solid fa-clock"></i>
+                            <p class="nav__item-title">Đồng hồ</p>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <i class="nav__item-icon fa-solid fa-mobile-screen"></i>
+                            <p class="nav__item-title">Máy cũ giá rẻ</p>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <i class="nav__item-icon fa-solid fa-desktop"></i>
+                            <p class="nav__item-title">Pc, Máy in</p>
+                            <i class="nav__item-icon fa-solid fa-caret-down"></i>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <p class="nav__item-title">Sim, Thẻ cào</p>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__item-link">
+                            <p class="nav__item-title">Dịch vụ tiện ích</p>
+                            <i class="nav__item-icon fa-solid fa-caret-down"></i>
+                        </a>
+                    </li>
+                </ul>
+            </header>
+            <div class="cart--empty">
+                <i class="cart-icon fa-solid fa-cart-arrow-down"></i>
+                <p class="cart-title">Không có sản phẩm nào trong giỏ hàng</p>
+                <a href="index.html" class="backhome">VỀ TRANG CHỦ</a>
+            </div>
+            <div class="cart">
+                <!-- <div class="cart__nav">
+                    <a href="/index.html" class="cart__backhome"
+                        ><i class="fa-solid fa-chevron-left"></i>Mua thêm sản phẩm khác</a
+                    >
+                    <p class="cart__nav-title">Giỏ hàng của anh</p>
+                </div>
+                <div class="cart__products">
+                    <div class="cart__product">
+                        <div class="cart__product-top">
+                            <img
+                                src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg"
+                                alt="Ảnh sản phẩm"
+                                class="cart__product-img"
+                            />
+                            <div class="product__details">
+                                <div class="product__name">
+                                    <p>Điện thoại iPhone 14 Pro Max 128GB</p>
+                                    <div class="product__color">
+                                        <p>Màu:</p>
+                                        <div class="product__color-name">Đen</div>
+                                        <i class="product__color-dropdown fa-solid fa-sort-down"></i>
+                                    </div>
+                                </div>
+                                <div class="product__amount">
+                                    <div class="product__amount-money">
+                                        <div class="product__amount-money--newprice">27,990,000đ</div>
+                                        <del class="product__amount-money--oldprice"> 29,990,000đ </del>
+                                    </div>
+                                    <div class="product__amount-quantity">
+                                        <button class="product__amount-minus"><i class="fa-solid fa-minus"></i></button>
+                                        <div class="quantity">1</div>
+                                        <button class="product__amount-plus"><i class="fa-solid fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="cart__product-del">
+                            <i class="product__del-icon fa-solid fa-xmark"></i>
+                            <p class="product__del-title">Xóa</p>
+                        </button>
+                    </div>
+                    <p class="total__products"></p>
+                </div> -->
+            </div>
+        </div>
+    </body>
+    <script type="module" src="./cart.js"></script>
+    <script type="module" src="./Data.js"></script>
+</html>
