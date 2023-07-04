@@ -1,8 +1,8 @@
 // Handle header cart number display
 // localStorage.setItem('CartData', JSON.stringify(Cart));
 var CartLocal = JSON.parse(localStorage.getItem('CartData'));
+var totalProducts = 0;
 if (CartLocal.length > 0) {
-    var totalProducts = 0;
     CartLocal.forEach((cart) => {
         totalProducts += cart.quantity;
     });
@@ -49,13 +49,30 @@ window.handleQuantityPlus = function () {
 
 // handle add cart
 window.handleAddCart = function () {
-    CartLocal.map((i) => {
-        if (i.id == product.id) {
-            if ((i.quantity += quantity) <= 5) {
-                console.log('oke');
+    var trung = false;
+    CartLocal.map((CartItem) => {
+        if (CartItem.id == product.id) {
+            // neu trung thi them
+            trung = true;
+            if (CartItem.quantity + quantity <= 5) {
+                CartItem.quantity += quantity;
+                localStorage.setItem('CartData', JSON.stringify(CartLocal));
+                // return;
             } else {
-                console.log('chua oke');
+                alert('vui long chon toi da 5 san pham');
             }
         }
     });
+    if (!trung) {
+        product.quantity = quantity;
+        CartLocal.push(product);
+        localStorage.setItem('CartData', JSON.stringify(CartLocal));
+    }
+    // cap nhat so luong gio hang
+    totalProducts = 0;
+    CartLocal.forEach((cart) => {
+        totalProducts += cart.quantity;
+    });
+    document.querySelector('.header__top-cart-number').style.display = 'block';
+    document.querySelector('.header__top-cart-number').innerHTML = `${totalProducts}`;
 };

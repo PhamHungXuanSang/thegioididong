@@ -99,9 +99,9 @@ const renderDeal = (Phone) => {
             alt="Ảnh điện thoại"
         />
         <p class="product-item__name">${phone.name}</p>
-        <div class="product-item--newprice">${phone.newPrice}</div>
+        <div class="product-item--newprice">${phone.newPrice.toLocaleString() + ' đ'}</div>
         <div>
-            <del class="product-item--oldprice">${phone.oldPrice}</del>
+            <del class="product-item--oldprice">${phone.oldPrice.toLocaleString() + ' đ'}</del>
             <div class="product-item__discount-persent"></div>
         </div>
     </a>`;
@@ -117,3 +117,15 @@ window.pushPhone = function (index) {
 };
 
 renderDeal(dealPhone);
+
+// test render currency
+// let USDollar = new Intl.NumberFormat('en-US', {
+//     style: 'currency',
+//     currency: 'VNĐ',
+// });
+
+// console.log(`The formated version of 27000000 is ${USDollar.format(27000000)}`);
+
+// var x = 27000000;
+// x = x.toLocaleString() + ' đ';
+// console.log(x);

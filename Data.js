@@ -15,13 +15,73 @@ export const Phone = [
     {
         id: 1,
         brand: 'Xiaomi',
-        name: ' Xiaomi 13 5G',
+        name: 'Xiaomi 13 5G',
         color: [
             ['Đen', 'https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-den-200x200.jpg'],
             ['Trắng', 'https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-xanh-200x200.jpg'],
         ],
         oldPrice: 22990000,
         newPrice: 18990000,
+    },
+    {
+        id: 2,
+        brand: 'Samsung',
+        name: 'Samsung Galaxy S23+ 5G 256GB',
+        color: [
+            ['Kem', 'https://cdn.tgdd.vn/Products/Images/42/290829/samsung-galaxy-s23-plus-200x200.jpg'],
+            ['Đen', 'https://cdn.tgdd.vn/Products/Images/42/290829/samsung-galaxy-s23-plus-2-200x200.jpg'],
+            ['Xanh rêu', 'https://cdn.tgdd.vn/Products/Images/42/290829/samsung-galaxy-s23-plus-3-200x200.jpg'],
+            ['Tím nhạt', 'https://cdn.tgdd.vn/Products/Images/42/290829/samsung-galaxy-s23-plus-5-1-200x200.jpg'],
+        ],
+        oldPrice: 26990000,
+        newPrice: 16990000,
+    },
+    {
+        id: 3,
+        brand: 'OPPO',
+        name: 'OPPO Find X5 Pro 5G',
+        color: [
+            [
+                'Tím',
+                'https://cdn.tgdd.vn/Products/Images/42/299034/oppo-find-n2-flip-purple-thumb-1-600x600-1-200x200.jpg',
+            ],
+            ['Đen', 'https://cdn.tgdd.vn/Products/Images/42/299034/oppo-n2-flip-den-thumb-200x200.jpg'],
+        ],
+        oldPrice: 32990000,
+        newPrice: 19990000,
+    },
+    {
+        id: 4,
+        brand: 'Vivo',
+        name: 'Vivo V25 Pro 5G',
+        color: [
+            ['Xanh dương', 'https://cdn.tgdd.vn/Products/Images/42/282389/vivo-v25-pro-5g-xanh-thumb-1-200x200.jpg'],
+            ['Đen', 'https://cdn.tgdd.vn/Products/Images/42/282389/vivo-v25-pro-5g-den-thumb-1-200x200.jpg'],
+        ],
+        oldPrice: 13990000,
+        newPrice: 9990000,
+    },
+    {
+        id: 5,
+        brand: 'realme',
+        name: 'realme 10',
+        color: [
+            ['Trắng', 'https://cdn.tgdd.vn/Products/Images/42/292672/realme-10-thumb-1-200x200.jpg'],
+            ['Đen', 'https://cdn.tgdd.vn/Products/Images/42/292672/realme-10-den-thumb-200x200.jpg'],
+        ],
+        oldPrice: 7190000,
+        newPrice: 6890000,
+    },
+    {
+        id: 6,
+        brand: 'Nokia',
+        name: 'Nokia G22',
+        color: [
+            ['Xanh dương', 'https://cdn.tgdd.vn/Products/Images/42/303937/nokia-g22-xanh-thumb-1-2-200x200.jpg'],
+            ['Xám', 'https://cdn.tgdd.vn/Products/Images/42/303937/nokia-g22-xam-thumb-200x200.jpg'],
+        ],
+        oldPrice: 3990000,
+        newPrice: 3690000,
     },
 ];
 
@@ -43,7 +103,7 @@ export const Cart = [
     {
         id: 1,
         brand: 'Xiaomi',
-        name: ' Xiaomi 13 5G',
+        name: 'Xiaomi 13 5G',
         color: [
             ['Đen', 'https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-den-200x200.jpg'],
             ['Trắng', 'https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-xanh-200x200.jpg'],
@@ -55,7 +115,7 @@ export const Cart = [
     {
         id: 2,
         brand: 'LG',
-        name: ' LG',
+        name: 'LG',
         color: [
             ['Đen', 'https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-den-200x200.jpg'],
             ['Trắng', 'https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-xanh-200x200.jpg'],

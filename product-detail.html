@@ -158,13 +158,14 @@
     <script src="./slider.js"></script>
     <script>
         Slider('#sliderLibrary', {
-            width: 710,
-            height: 394,
-            slidesPerView: 2,
-            spaceBetween: 0,
+            width: 800,
+            height: 400,
+            slidesPerView: 1,
+            spaceBetween: 10,
+            draggable: true,
             autoplay: {
-                enable: false,
-                delay: 1.5,
+                enable: true,
+                delay: 3,
             },
             pagination: {
                 element: '.paginationLibrary',
