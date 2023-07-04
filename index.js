@@ -90,13 +90,12 @@ setInterval(() => {
 // Fake data Phone
 localStorage.setItem('Phone', JSON.stringify(Phone));
 var dealPhone = JSON.parse(localStorage.getItem('Phone'));
-console.log(dealPhone);
 const renderDeal = (Phone) => {
     const phone = Phone.map((phone, index) => {
         return `<a href="./product-detail.html" class="product-item" onclick="pushPhone(${index})">
         <img
             class="product-item__img"
-            src="${phone.color.black[1]}"
+            src="${phone.color[0][1]}"
             alt="Ảnh điện thoại"
         />
         <p class="product-item__name">${phone.name}</p>

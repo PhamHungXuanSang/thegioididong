@@ -25,7 +25,7 @@ const render = (Cart) => {
                         <div class="cart__product">
                         <div class="cart__product-top">
                             <img
-                                src="${cart.color.black[1]}"
+                                src="${cart.color[0][1]}"
                                 alt="Ảnh sản phẩm"
                                 class="cart__product-img"
                             />
@@ -34,7 +34,7 @@ const render = (Cart) => {
                                     <p>${cart.name}</p>
                                     <div class="product__color">
                                         <p>Màu:</p>
-                                        <div class="product__color-name">${cart.color.black[0]}</div>
+                                        <div class="product__color-name">${cart.color[0][0]}</div>
                                         <i class="product__color-dropdown fa-solid fa-sort-down"></i>
                                     </div>
                                 </div>

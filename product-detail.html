@@ -119,85 +119,61 @@
                 </ul>
             </header>
             <section class="productDetail">
-                <div class="productDetail-name">Điện thoại Xiaomi 13 5G</div>
+                <div class="productDetail-name"></div>
                 <div class="productDetail-main">
-                    <div class="img__content">
-                        <div class="img-slideShow">
-                            <button class="img-slideShow__btn--left">
-                                <i class="img-slideShow__icon-left fa-solid fa-chevron-left"></i>
-                            </button>
-                            <div class="img__wrapper">
-                                <div class="boc">
-                                    <img
-                                        src="https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-den-200x200.jpg"
-                                        alt="Ảnh điện thoại"
-                                        class="img"
-                                    />
-                                </div>
-                                <div class="boc">
-                                    <img
-                                        src="https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-xanh-200x200.jpg"
-                                        alt="Ảnh điện thoại"
-                                        class="img"
-                                    />
-                                </div>
-                                <div class="boc">
-                                    <img
-                                        src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-vang-thumb-200x200.jpg"
-                                        alt="Ảnh điện thoại"
-                                        class="img"
-                                    />
-                                </div>
-                                <div class="boc">
-                                    <img
-                                        src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-200x200.jpg"
-                                        alt="Ảnh điện thoại"
-                                        class="img"
-                                    />
-                                </div>
-                            </div>
-                            <button class="img-slideShow__btn--right">
-                                <i class="img-slideShow__icon-right fa-solid fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="img-preview">
-                            <div id="0" class="preview-wrapper active" onclick="handleChangeActive(0)">
-                                <img
-                                    src="https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-den-200x200.jpg"
-                                    alt="Ảnh điện thoại"
-                                    class="preview-img"
-                                />
-                            </div>
-                            <div id="1" class="preview-wrapper" onclick="handleChangeActive(1)">
-                                <img
-                                    src="https://cdn.tgdd.vn/Products/Images/42/267984/xiaomi-13-thumb-xanh-200x200.jpg"
-                                    alt="Ảnh điện thoại"
-                                    class="preview-img"
-                                />
-                            </div>
-
-                            <div id="2" class="preview-wrapper" onclick="handleChangeActive(2)">
-                                <img
-                                    src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-vang-thumb-200x200.jpg"
-                                    alt="Ảnh điện thoại"
-                                    class="preview-img"
-                                />
-                            </div>
-                            <div id="3" class="preview-wrapper" onclick="handleChangeActive(3)">
-                                <img
-                                    src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-200x200.jpg"
-                                    alt="Ảnh điện thoại"
-                                    class="preview-img"
-                                />
-                            </div>
-                        </div>
+                    <div id="sliderLibrary">
+                        <div class="wrapper"></div>
+                        <div class="paginationLibrary"></div>
+                        <!--  -->
+                        <button class="prev">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button class="next">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        <!--  -->
                     </div>
                     <div class="info">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, ea voluptas expedita quis
+                            recusandae possimus suscipit facere, aperiam nostrum non saepe quaerat sit harum? Debitis
+                            laudantium fugiat similique asperiores voluptatum!
+                        </p>
+                        <div class="quantity__wrapper">
+                            <button class="minus" onclick="handleQuantityMinus()">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <div class="quantity">1</div>
+                            <button class="plus" onclick="handleQuantityPlus()">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
                         <button class="add-cart--btn" onclick="handleAddCart()">Thêm vào giỏ hàng</button>
                     </div>
                 </div>
             </section>
         </div>
     </body>
-    <script type="module" src="./product-detail.js"></script>
+    <script src="./product-detail.js"></script>
+    <script src="./slider.js"></script>
+    <script>
+        Slider('#sliderLibrary', {
+            width: 710,
+            height: 394,
+            slidesPerView: 2,
+            spaceBetween: 0,
+            autoplay: {
+                enable: false,
+                delay: 1.5,
+            },
+            pagination: {
+                element: '.paginationLibrary',
+                clickable: true,
+            },
+            navigation: {
+                left: '.prev',
+                right: '.next',
+            },
+        });
+    </script>
 </html>
