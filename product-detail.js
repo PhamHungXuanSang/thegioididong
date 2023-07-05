@@ -24,8 +24,8 @@ renderProductName(product);
 
 const renderProductImg = () => {
     const img = product.color
-        .map((color) => {
-            return `<div class="slide"><img src="${color[1]}"></img></div>`;
+        .map((img) => {
+            return `<div class="slide"><img src="${img[1]}"></img></div>`;
         })
         .join('');
     document.querySelector('.wrapper').innerHTML = img;
