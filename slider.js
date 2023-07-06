@@ -10,7 +10,9 @@ function Slider(selector, config) {
             enable: config.autoplay.enable,
             delay: config.autoplay.delay,
         },
+        zoomable: config.zoomable,
         pagination: {
+            visible: config.visible,
             element: config.pagination.element,
             clickable: config.pagination.clickable,
         },
@@ -64,7 +66,7 @@ function Slider(selector, config) {
     paginationElement.innerHTML = htmls;
 
     if (config.draggable) {
-        wrapper.style = 'cursor:grab;width:100%;height:100%;display:flex;align-items:center;overflow-y:hidden;text-align:center;overflow-x:hidden;scroll-behavior:auto;';
+        wrapper.style = 'cursor:grab;width:100%;height:100%;display:flex;align-items:center;overflow-y:hidden;text-align:center;overflow-x:hidden;scroll-behavior:smooth;';
         let startX,
             direction = '',
             isDragging = false;
@@ -77,8 +79,10 @@ function Slider(selector, config) {
             isDragging = false;
             if (direction == 'next' && currentIndex + 1 <= slideNum - 1) {
                 handleScrollById(++currentIndex);
+                direction = '';
             } else if (direction == 'prev' && currentIndex > 0) {
                 handleScrollById(--currentIndex);
+                direction = '';
             }
         };
         const dragging = (e) => {
@@ -92,17 +96,17 @@ function Slider(selector, config) {
         wrapper.addEventListener('mousedown', dragStart);
         wrapper.addEventListener('mousemove', dragging);
         wrapper.addEventListener('mouseup', dragStop);
+    }
+    if (config.autoplay.enable == false && config.draggable == false && config.zoomable) {
         var mirror = document.querySelector('#mirror');
-        mirror.style = `display:block;position:fixed;pointer-events:none;transform:translate(-50%, -50%);width:${imgWidthArr[currentIndex] / 5}px;height:${
-            config.height / 5
-        }px;background-image:url('https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg');background-size:${imgWidthArr[currentIndex] * 1.5}px ${config.height * 1.5}px;background-repeat:no-repeat;`;
-
         wrapper.addEventListener('mouseout', function () {
             mirror.style.display = 'none';
         });
         wrapper.addEventListener('mousemove', function (e) {
-            mirror.style.display = 'block';
-            let heightSlide = this.offsetHeight; // chieu cao slide = 400
+            mirror.style = `display:block;position:fixed;pointer-events:none;transform:translate(-50%, -50%);width:${imgWidthArr[currentIndex] / 5}px;height:${config.height / 5}px;background-image:url('${imgElementArr[currentIndex].src}');background-size:${imgWidthArr[currentIndex] * 1.5}px ${
+                config.height * 1.5
+            }px;background-repeat:no-repeat;`;
+            let heightSlide = wrapper.offsetHeight; // chieu cao slide
 
             let elementRect = imgElementArr[currentIndex].getBoundingClientRect();
             let elementLeft = Math.floor(elementRect.left);
@@ -165,7 +169,7 @@ function Slider(selector, config) {
     };
 
     if (config.autoplay.enable == true) {
-        const timerId = setInterval(
+        setInterval(
             () => {
                 if (currentIndex == slideNum - 1) {
                     handleScrollById(0);
