@@ -4,15 +4,18 @@ function Slider(selector, config) {
         width: config.width,
         height: config.height,
         slidesPerView: config.slidesPerView,
-        spaceBetween: config.spaceBetween,
         draggable: config.draggable,
+        spaceBetween: config.spaceBetween,
         autoplay: {
             enable: config.autoplay.enable,
             delay: config.autoplay.delay,
         },
         zoomable: config.zoomable,
         pagination: {
-            visible: config.visible,
+            visible: {
+                display: config.pagination.visible.display,
+                img: config.pagination.visible.img,
+            },
             element: config.pagination.element,
             clickable: config.pagination.clickable,
         },
@@ -36,9 +39,6 @@ function Slider(selector, config) {
     var btnRight = document.querySelector(config.navigation.right);
     btnRight.style = 'cursor:pointer;position:absolute;top:calc(100% / 2 - 30px);right:0;width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;opacity:0.6;border-top-left-radius:6px;border-bottom-left-radius:6px;box-shadow:-6px 0 4px rgba(0, 0, 0, 0.05);';
 
-    var paginationElement = document.querySelector(`${config.pagination.element}`); // img-preview
-    paginationElement.style = 'display:flex;justify-content:center;margin-top:4px;';
-
     var width = config.width / config.slidesPerView; // slide width
 
     const list = [...document.querySelector(`${selector}`).children[0].children]; // Spread HTMLCollection vào mảng
@@ -47,23 +47,39 @@ function Slider(selector, config) {
     // Lặp qua và css cho từng phần tử
     var imgWidthArr = [];
     var imgElementArr = [];
-    list.map((item) => {
-        item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;padding:0 ${config.spaceBetween}px`;
-        [...item.children][0].style = 'display:block;max-width:100%;min-height:100%;object-fit:cover;'; // img
+    list.map((item, index) => {
+        item.classList.add(index);
+        item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;`;
+        [...item.children][0].style = `display:block;max-width:100%;min-height:100%;object-fit:cover`; // img
         imgWidthArr.push([...item.children][0].offsetWidth); // push vào mảng để lưu lại giá trị chiều rộng của mỗi ảnh
         imgElementArr.push([...item.children][0]); // push vào mảng để lưu lại DOM Element của mỗi ảnh
     }); // slide
 
+    if (config.pagination.visible.display) {
+        var paginationElement = document.querySelector(`${config.pagination.element}`); // img-preview
+        paginationElement.style = 'display:flex;justify-content:center;margin-top:4px;';
+        const htmls = list
+            .map((item, index) => {
+                return `<div id="${index}" class="pagination-wrapper ${index == 0 ? 'active' : ''}" ${config.pagination.clickable == true ? `onclick="handleScrollById(${index})"` : ``}></div>`;
+            })
+            .join('');
+        paginationElement.innerHTML = htmls;
+        var paginationItem = [...paginationElement.children];
+        paginationItem.forEach((it, index) => {
+            if (config.pagination.visible.img) {
+                it.style = `min-width:${wrapper.offsetHeight / 10}px;height:${wrapper.offsetHeight / 10}px;background-image:url('${imgElementArr[index].src}');background-repeat:no-repeat;background-size:100% 100%;border:${index == 0 ? '2px' : '1px'} solid ${
+                    index == 0 ? '#f06c2c' : 'black'
+                };opacity:0.5;border-radius:1px;margin:0 4px;${config.pagination.clickable == true ? 'cursor:pointer;' : ''}`;
+            } else {
+                it.style = `width:16px;height:16px;background-color:orange;border:1px solid black;opacity:0.5;border-radius:50%;margin:0 4px;${config.pagination.clickable == true ? 'cursor:pointer;' : ''}`;
+            }
+            if (index == 0) it.style.opacity = '1';
+        });
+    }
     // render pagination
     if (config.slidesPerView > 1) {
         list.splice(list.length - (config.slidesPerView - 1), config.slidesPerView);
     }
-    const htmls = list
-        .map((item, index) => {
-            return `<div id="${index}" class="preview-wrapper ${index == 0 ? 'active' : ''}" ${config.pagination.clickable == true ? `onclick="handleScrollById(${index})"` : ``} style='width:12px;height:12px;margin:auto 4px;border:1px solid #000;border-radius:50%;background-color:orange;'></div>`;
-        })
-        .join('');
-    paginationElement.innerHTML = htmls;
 
     if (config.draggable) {
         wrapper.style = 'cursor:grab;width:100%;height:100%;display:flex;align-items:center;overflow-y:hidden;text-align:center;overflow-x:hidden;scroll-behavior:smooth;';
@@ -127,12 +143,8 @@ function Slider(selector, config) {
     }
 
     var scrolled = 0; // tracking scrolled pixel
-    var paginationItem = [...paginationElement.children];
-    paginationItem.forEach((it, index) => {
-        it.style = `width:16px;height:16px;background-color:orange;border:1px solid black;opacity:0.5;border-radius:50%;margin:0 4px;${config.pagination.clickable == true ? 'cursor:pointer;' : ''}`;
-        if (index == 0) it.style.opacity = '1';
-    });
-    // handle click img preview
+
+    // handle scroll
     handleScrollById = function (index) {
         var scrollTo = index * width;
         if (scrollTo > scrolled) {
@@ -144,17 +156,21 @@ function Slider(selector, config) {
             scrolled = scrollTo;
         }
         currentIndex = index;
-        document.querySelectorAll('.preview-wrapper').forEach((wrap) => {
-            wrap.classList.remove('active');
-        });
-        document.getElementById(`${index}`).classList.add('active');
-        paginationItem.forEach((e) => {
-            if (e.classList.contains('active')) {
-                e.style.opacity = `1`;
-            } else {
-                e.style.opacity = `0.5`;
-            }
-        });
+        if (config.pagination.visible.display) {
+            document.querySelectorAll('.pagination-wrapper').forEach((wrap) => {
+                wrap.classList.remove('active');
+            });
+            document.getElementById(`${index}`).classList.add('active');
+            paginationItem.forEach((e) => {
+                if (e.classList.contains('active')) {
+                    e.style.opacity = `1`;
+                    if (config.pagination.visible.img) e.style.border = `2px solid #f06c2c`;
+                } else {
+                    e.style.opacity = `0.5`;
+                    e.style.border = `1px solid black`;
+                }
+            });
+        }
 
         if (scrolled > 0) {
             btnLeft.style.display = 'block';

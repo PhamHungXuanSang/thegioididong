@@ -18,10 +18,7 @@
             <header class="header">
                 <div class="header__top">
                     <a href="index.html" class="header__top-logo">
-                        <img
-                            class="header__top-logo-img"
-                            src="https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-The-Gioi-Di-Dong-MWG-B-H.png"
-                        />
+                        <img class="header__top-logo-img" src="https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-The-Gioi-Di-Dong-MWG-B-H.png" />
                     </a>
                     <div class="header__top-place">
                         <div class="header__top-place--left">
@@ -124,8 +121,42 @@
                 <a href="index.html" class="backhome">VỀ TRANG CHỦ</a>
             </div>
             <div class="cart"></div>
+            <div class="customer">
+                <p class="customer__title">THÔNG TIN KHÁCH HÀNG</p>
+                <div class="customer__sex">
+                    <label class="container"
+                        >Nam
+                        <input class="checkbox" type="checkbox" onclick="handleChecked(0)" checked="true" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container"
+                        >Nữ
+                        <input class="checkbox" type="checkbox" onclick="handleChecked(1)" />
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <form class="form" id="form-1">
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="fullname" class="form-label"></label>
+                            <input id="fullname" name="fullname" rules="required|name" class="form-control" type="text" placeholder="Họ và Tên" />
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phonenumber" class="form-label"></label>
+                            <input maxlength="10" id="phonenumber" name="phonenumber" rules="required|number|min:10" class="form-control" type="text" placeholder="Số điện thoại" />
+                            <span class="form-message"></span>
+                        </div>
+                    </div>
+                    <button class="form-submit">Mua hàng</button>
+                </form>
+            </div>
         </div>
     </body>
     <script type="module" src="./cart.js"></script>
     <script type="module" src="./Data.js"></script>
+    <script src="./validator.js"></script>
+    <script>
+        Validator('#form-1');
+    </script>
 </html>

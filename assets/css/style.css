@@ -728,3 +728,157 @@
     text-align: center;
     flex: 1;
 }
+
+.customer {
+    width: 600px;
+    margin: 0 auto;
+    background-color: #f3f3f3;
+    margin-top: 4px;
+    padding: 16px;
+    box-shadow: 2px 2px 4px 4px #ccc;
+}
+
+.customer__title {
+    margin-bottom: 16px;
+}
+
+.customer__sex {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    display: block;
+    position: relative;
+    padding-left: 24px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.container:first-child {
+    margin-right: 32px;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    border: 1px solid #000;
+    border-radius: 15px;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ddd;
+}
+
+/* When the checkbox is checked, add a background */
+input:checked ~ .checkmark {
+    background-color: #f06c2c;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkmark:after {
+    left: 2px;
+    top: 2px;
+    width: 4px;
+    height: 4px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.form {
+    margin-top: 16px;
+    text-align: center;
+    border-radius: 2px;
+    align-self: center;
+}
+
+.form-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    max-width: 49%;
+    margin-bottom: 16px;
+}
+
+.form-label,
+.form-message {
+    text-align: left;
+}
+
+.form-control {
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #b3b3b3;
+    border-radius: 3px;
+    outline: none;
+    font-size: 1.4rem;
+}
+
+.form-control:hover {
+    border-color: #f06c2c;
+}
+
+.form-group.invalid .form-control {
+    border-color: #f33a58;
+}
+
+.form-group.invalid .form-message {
+    color: #f33a58;
+}
+
+.form-message {
+    font-size: 14px;
+    line-height: 14px;
+    padding: 4px 0 0;
+    color: #f33a58;
+    text-align: center;
+}
+
+.form-submit {
+    outline: none;
+    background-color: #f06c2c;
+    margin-top: 12px;
+    padding: 12px 16px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    width: 100%;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.form-submit:hover {
+    background-color: #f06c2c;
+}

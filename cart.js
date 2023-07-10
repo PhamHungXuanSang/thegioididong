@@ -42,12 +42,8 @@ const render = (Cart) => {
                                 </div>
                                 <div class="product__amount">
                                     <div class="product__amount-money">
-                                        <div class="product__amount-money--newprice">${
-                                            cart.newPrice.toLocaleString() + ' đ'
-                                        }</div>
-                                        <del class="product__amount-money--oldprice">${
-                                            cart.oldPrice.toLocaleString() + ' đ'
-                                        }</del>
+                                        <div class="product__amount-money--newprice">${cart.newPrice.toLocaleString() + ' đ'}</div>
+                                        <del class="product__amount-money--oldprice">${cart.oldPrice.toLocaleString() + ' đ'}</del>
                                     </div>
                                     <div class="product__amount-quantity">
                                         <button class="product__amount-minus" onclick="handleDecrease(${index})"><i class="fa-solid fa-minus"></i></button>
@@ -67,13 +63,6 @@ const render = (Cart) => {
                     <div class="price">
                         <p class="total__products">Tạm tính (${totalProducts} sản phẩm)</p>
                         <p class="total__price">${totalPrice.toLocaleString() + ' đ'}</p>
-                    </div>
-                    <div class="customer">
-                        <p>THÔNG TIN KHÁCH HÀNG</p>
-                        <div>
-                            <input type='checkbox'>Anh</input>
-                            <input type='checkbox'>Chị</input>
-                        </div>
                     </div>
                 </div>
             `;
@@ -108,3 +97,11 @@ window.handleIncrease = function (index) {
 };
 var CartLocal = JSON.parse(localStorage.getItem('CartData'));
 render(CartLocal);
+
+// customer info
+window.handleChecked = function (id) {
+    document.querySelectorAll('.checkbox').forEach((checkbox) => {
+        checkbox.checked = false;
+    });
+    document.querySelectorAll('.checkbox')[id].checked = true;
+};

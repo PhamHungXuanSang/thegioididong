@@ -156,15 +156,19 @@
             width: 800,
             height: 400,
             slidesPerView: 1,
-            spaceBetween: 20,
-            draggable: false, // draggable thì không zoom
+            spaceBetween: 30,
+            draggable: true, // draggable thì không zoom
             autoplay: {
-                enable: false, // enable thì không zoom
+                enable: true, // enable thì không zoom
                 delay: 3,
             },
             zoomable: true, // zoomable khi không drag và không autoplay
             pagination: {
                 element: '.paginationLibrary',
+                visible: {
+                    display: true,
+                    img: true,
+                },
                 clickable: true,
             },
             navigation: {
