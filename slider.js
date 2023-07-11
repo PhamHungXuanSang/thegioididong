@@ -4,13 +4,14 @@ function Slider(selector, config) {
         width: config.width,
         height: config.height,
         slidesPerView: config.slidesPerView,
+        spaceBetween: config.spaceBetween, // FIX
         draggable: config.draggable,
-        spaceBetween: config.spaceBetween,
         autoplay: {
             enable: config.autoplay.enable,
             delay: config.autoplay.delay,
         },
         zoomable: config.zoomable,
+        wrapperSlide: config.wrapperSlide,
         pagination: {
             visible: {
                 display: config.pagination.visible.display,
@@ -28,39 +29,61 @@ function Slider(selector, config) {
     var currentIndex = 0; // id active img
     // Lấy ra các element sẽ dùng
     var slider = document.querySelector(`${selector}`);
+    if (!slider) {
+        console.log(`Not fine ${selector} selector`);
+        return;
+    }
     slider.style = `width:${config.width}px;height:${config.height}px;position:relative;`;
 
-    var wrapper = document.querySelector(`${selector}`).children[0]; // img-slideShow
+    var wrapper = slider.querySelector(config.wrapperSlide); // img-slideShow
+    if (!wrapper) {
+        console.log(`Not fine ${config.wrapperSlide} selector`);
+        return;
+    }
     wrapper.style = 'width:100%;height:100%;display:flex;align-items:center;overflow-y:hidden;text-align:center;overflow-x:hidden;scroll-behavior:smooth;';
 
-    var btnLeft = document.querySelector(config.navigation.left);
+    var btnLeft = slider.querySelector(config.navigation.left);
+    if (!btnLeft) {
+        console.log(`Not fine ${config.navigation.left} selector`);
+        return;
+    }
     btnLeft.style = 'cursor:pointer;position:absolute;top:calc(100% / 2 - 30px);width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;opacity:0.6;border-top-right-radius:6px;border-bottom-right-radius:6px;box-shadow:6px 0 4px rgba(0, 0, 0, 0.05);';
 
-    var btnRight = document.querySelector(config.navigation.right);
+    var btnRight = slider.querySelector(config.navigation.right);
+    if (!btnRight) {
+        console.log(`Not fine ${config.navigation.right} selector`);
+        return;
+    }
     btnRight.style = 'cursor:pointer;position:absolute;top:calc(100% / 2 - 30px);right:0;width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;opacity:0.6;border-top-left-radius:6px;border-bottom-left-radius:6px;box-shadow:-6px 0 4px rgba(0, 0, 0, 0.05);';
 
     var width = config.width / config.slidesPerView; // slide width
 
-    const list = [...document.querySelector(`${selector}`).children[0].children]; // Spread HTMLCollection vào mảng
-    var slideNum = list.length; // sum slide
-    if (slideNum > 1) btnRight.style.display = 'block';
+    const list = [...wrapper.children]; // Spread HTMLCollection vào mảng
+    var slideCount = list.length; // sum slide
+    if (slideCount > 1) btnRight.style.display = 'block';
     // Lặp qua và css cho từng phần tử
     var imgWidthArr = [];
     var imgElementArr = [];
     list.map((item, index) => {
         item.classList.add(index);
         item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;`;
-        [...item.children][0].style = `display:block;max-width:100%;min-height:100%;object-fit:cover`; // img
-        imgWidthArr.push([...item.children][0].offsetWidth); // push vào mảng để lưu lại giá trị chiều rộng của mỗi ảnh
-        imgElementArr.push([...item.children][0]); // push vào mảng để lưu lại DOM Element của mỗi ảnh
+        for (var img of item.children) {
+            imgElementArr.push(img); // push vào mảng để lưu lại DOM Element của mỗi ảnh
+            imgWidthArr.push(img.offsetWidth); // push vào mảng để lưu lại giá trị chiều rộng của mỗi ảnh
+            img.style = `display:block;max-width:100%;min-height:100%;object-fit:cover`; // img
+        }
     }); // slide
 
     if (config.pagination.visible.display) {
-        var paginationElement = document.querySelector(`${config.pagination.element}`); // img-preview
+        var paginationElement = slider.querySelector(`${config.pagination.element}`); // img-preview
+        if (!paginationElement) {
+            console.log(`Not fine ${config.pagination.element} selector`);
+            return;
+        }
         paginationElement.style = 'display:flex;justify-content:center;margin-top:4px;';
         const htmls = list
             .map((item, index) => {
-                return `<div id="${index}" class="pagination-wrapper ${index == 0 ? 'active' : ''}" ${config.pagination.clickable == true ? `onclick="handleScrollById(${index})"` : ``}></div>`;
+                return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${config.pagination.clickable == true ? `onclick="handleScrollById(${index})"` : ``}></div>`;
             })
             .join('');
         paginationElement.innerHTML = htmls;
@@ -93,7 +116,7 @@ function Slider(selector, config) {
         };
         const dragStop = () => {
             isDragging = false;
-            if (direction == 'next' && currentIndex + 1 <= slideNum - 1) {
+            if (direction == 'next' && currentIndex + 1 <= slideCount - 1) {
                 handleScrollById(++currentIndex);
                 direction = '';
             } else if (direction == 'prev' && currentIndex > 0) {
@@ -114,7 +137,7 @@ function Slider(selector, config) {
         wrapper.addEventListener('mouseup', dragStop);
     }
     if (config.autoplay.enable == false && config.draggable == false && config.zoomable) {
-        var mirror = document.querySelector('#mirror');
+        var mirror = slider.querySelector('#mirror');
         wrapper.addEventListener('mouseout', function () {
             mirror.style.display = 'none';
         });
@@ -157,10 +180,10 @@ function Slider(selector, config) {
         }
         currentIndex = index;
         if (config.pagination.visible.display) {
-            document.querySelectorAll('.pagination-wrapper').forEach((wrap) => {
-                wrap.classList.remove('active');
+            slider.querySelectorAll('.pagination-item').forEach((pi) => {
+                pi.classList.remove('active');
+                if (pi.id == index) pi.classList.add('active');
             });
-            document.getElementById(`${index}`).classList.add('active');
             paginationItem.forEach((e) => {
                 if (e.classList.contains('active')) {
                     e.style.opacity = `1`;
@@ -177,7 +200,7 @@ function Slider(selector, config) {
         } else {
             btnLeft.style.display = 'none';
         }
-        if (scrollTo == width * (slideNum - 1)) {
+        if (scrollTo == width * (slideCount - 1)) {
             btnRight.style.display = 'none';
         } else {
             btnRight.style.display = 'block';
@@ -187,7 +210,7 @@ function Slider(selector, config) {
     if (config.autoplay.enable == true) {
         setInterval(
             () => {
-                if (currentIndex == slideNum - 1) {
+                if (currentIndex == slideCount - 1) {
                     handleScrollById(0);
                 } else {
                     handleScrollById(++currentIndex);

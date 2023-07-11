@@ -9,7 +9,7 @@ function Validator(formSelector) {
     }
 
     var formElement = document.querySelector(`${formSelector}`);
-    var formRules = {}; // obj key=input[name], value=validatorRules[rules.split(':')]
+    var formRules = {};
 
     // Tạo custom rule
     // Quy ước rule:
@@ -76,6 +76,8 @@ function Validator(formSelector) {
             }
         }
 
+        // Mai
+
         function handleValidate(e) {
             for (var func of formRules[e.target.name]) {
                 if (func(e.target.value)) {
@@ -98,13 +100,22 @@ function Validator(formSelector) {
             e.preventDefault();
             var isValid = true;
             for (var input of inputs) {
-                // handleValidate({ target: input });
                 if (!handleValidate({ target: input })) {
                     isValid = false;
                 }
             }
-
-            if (isValid) formElement.submit();
+            if (isValid) {
+                if (typeof this.onSubmit === 'function') {
+                    var inputsHasRule = formElement.querySelectorAll('[name]');
+                    var formValues = Array.from(inputsHasRule).reduce((values, input) => {
+                        values[input.name] = input.value;
+                        return values;
+                    }, {});
+                    this.onSubmit(formValues);
+                } else {
+                    formElement.submit();
+                }
+            }
         };
     }
 }

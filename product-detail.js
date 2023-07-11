@@ -28,7 +28,7 @@ const renderProductImg = () => {
             return `<div class="slide"><img src="${img[1]}"></img></div>`;
         })
         .join('');
-    document.querySelector('.wrapper').innerHTML = img;
+    document.querySelector('.wrapperSlide').innerHTML = img;
 };
 renderProductImg(product);
 

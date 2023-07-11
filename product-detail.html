@@ -119,17 +119,16 @@
                 <div class="productDetail-name"></div>
                 <div class="productDetail-main">
                     <div id="sliderLibrary">
-                        <div class="wrapper"></div>
-                        <div class="paginationLibrary"></div>
-                        <!--  -->
+                        <div class="wrapperSlide"></div>
+                        <div class="wrapperPagination"></div>
+
                         <button class="prev">
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
                         <button class="next">
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
-                        <!--  -->
-                        <!-- <div id="zoom"></div> -->
+
                         <div id="mirror" style="background-image: url('https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg')"></div>
                     </div>
                     <div class="info">
@@ -155,7 +154,7 @@
         Slider('#sliderLibrary', {
             width: 800,
             height: 400,
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 30,
             draggable: true, // draggable thì không zoom
             autoplay: {
@@ -163,8 +162,9 @@
                 delay: 3,
             },
             zoomable: true, // zoomable khi không drag và không autoplay
+            wrapperSlide: '.wrapperSlide',
             pagination: {
-                element: '.paginationLibrary',
+                element: '.wrapperPagination',
                 visible: {
                     display: true,
                     img: true,
