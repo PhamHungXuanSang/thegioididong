@@ -27,7 +27,12 @@ function Validator(formSelector) {
         },
         min: function (min) {
             return function (value) {
-                return value.length >= min ? undefined : `Không đủ ${min} chữ số`;
+                return value.length >= min ? undefined : `Không đủ ${min} ký tự`;
+            };
+        },
+        max: function (max) {
+            return function (value) {
+                return value.length <= max ? undefined : `Quá ${max} ký tự`;
             };
         },
     };
@@ -75,8 +80,6 @@ function Validator(formSelector) {
                 formRules[input.name] = [ruleFunc];
             }
         }
-
-        // Mai
 
         function handleValidate(e) {
             for (var func of formRules[e.target.name]) {

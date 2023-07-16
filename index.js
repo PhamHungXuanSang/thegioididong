@@ -1,4 +1,4 @@
-import { Phone, Cart } from './Data.js';
+import { Phone } from './Data.js';
 
 // Handle image slider
 var scrollFirst = 0;
@@ -48,15 +48,21 @@ document.querySelector('.slider__btn-left').onclick = () => {
 // Handle header cart number display
 // localStorage.setItem('CartData', JSON.stringify(Cart));
 var CartLocal = JSON.parse(localStorage.getItem('CartData'));
-if (CartLocal.length > 0) {
+// Đưa db cart từ trang hiện tại vào, kiểm tra nếu length > 0 thì hiển thị không thì ẩn đi, return về tổng số hàng
+function renderCartNumber(CartLocal) {
     var totalProducts = 0;
-    CartLocal.forEach((cart) => {
-        totalProducts += cart.quantity;
-    });
-    document.querySelector('.header__top-cart-number').style.display = 'block';
-    document.querySelector('.header__top-cart-number').innerHTML = `${totalProducts}`;
-} else {
-    document.querySelector('.header__top-cart-number').style.display = 'none';
+    var totalPrice = 0;
+    if (CartLocal.length > 0) {
+        CartLocal.forEach((cart) => {
+            totalProducts += cart.quantity;
+            totalPrice += cart.quantity * cart.newPrice;
+        });
+        document.querySelector('.header__top-cart-number').style.display = 'block';
+        document.querySelector('.header__top-cart-number').innerHTML = `${totalProducts}`;
+    } else {
+        document.querySelector('.header__top-cart-number').style.display = 'none';
+    }
+    return { totalProducts, totalPrice };
 }
 
 // Handle countdown timer
@@ -116,16 +122,5 @@ window.pushPhone = function (index) {
     console.log(product);
 };
 
+renderCartNumber(CartLocal);
 renderDeal(dealPhone);
-
-// test render currency
-// let USDollar = new Intl.NumberFormat('en-US', {
-//     style: 'currency',
-//     currency: 'VNĐ',
-// });
-
-// console.log(`The formated version of 27000000 is ${USDollar.format(27000000)}`);
-
-// var x = 27000000;
-// x = x.toLocaleString() + ' đ';
-// console.log(x);

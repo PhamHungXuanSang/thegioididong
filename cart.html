@@ -123,29 +123,23 @@
             <div class="cart"></div>
             <div class="customer">
                 <p class="customer__title">THÔNG TIN KHÁCH HÀNG</p>
-                <!-- <div class="customer__sex">
+                <div class="customer__sex">
                     <label class="container"
                         >Nam
-                        <input class="checkbox" type="checkbox" onclick="handleChecked(0)" checked="true" />
+                        <input name="gender" value="Nam" class="checkbox" type="checkbox" onclick="handleChecked(0)" checked="true" />
                         <span class="checkmark"></span>
                     </label>
                     <label class="container"
                         >Nữ
-                        <input class="checkbox" type="checkbox" onclick="handleChecked(1)" />
+                        <input name="gender" value="Nữ" class="checkbox" type="checkbox" onclick="handleChecked(1)" />
                         <span class="checkmark"></span>
                     </label>
-                </div> -->
+                </div>
                 <form class="form" id="form-1">
                     <div class="form-input">
-                        <!-- <div class="form-group">
-                            <label for="gender" class="form-label"></label>
-                            <input name="gender" value="male" rules="required" class="form-control" type="radio">Nam</input>
-                            <input name="gender" value="female" rules="required" class="form-control" type="radio">Nữ</input>
-                            <span class="form-message"></span>
-                        </div> -->
                         <div class="form-group">
                             <label for="fullname" class="form-label"></label>
-                            <input id="fullname" name="fullname" rules="required|name" class="form-control" type="text" placeholder="Họ và Tên" />
+                            <input id="fullname" name="fullname" rules="required|name|max:30" class="form-control" type="text" placeholder="Họ và Tên" />
                             <span class="form-message"></span>
                         </div>
                         <div class="form-group">
@@ -160,11 +154,23 @@
         </div>
     </body>
     <script type="module" src="./cart.js"></script>
-    <script type="module" src="./Data.js"></script>
+    <!-- <script type="module" src="./Data.js"></script> -->
     <script src="./validator.js"></script>
     <script>
         var form = new Validator('#form-1');
         form.onSubmit = (data) => {
+            var inputs = document.querySelectorAll('input[name="gender"]');
+            for (var input of inputs) {
+                if (input.checked) {
+                    data[input.name] = input.value;
+                }
+            }
+            var cartInfo = JSON.parse(localStorage.getItem('CartData'));
+            var namePhoneArr = {};
+            cartInfo.forEach((cI) => {
+                namePhoneArr[cI.name] = cI.quantity;
+            });
+            data['purchaseinfor'] = namePhoneArr;
             console.log(data);
         };
     </script>
