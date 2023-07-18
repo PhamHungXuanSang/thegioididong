@@ -9,6 +9,7 @@ function Slider(selector, config) {
         autoplay: {
             enable: config.autoplay.enable ? config.autoplay.enable : false,
             delay: config.autoplay.delay ? config.autoplay.delay : 3,
+            progress: config.autoplay.progress ? config.autoplay.progress : config.autoplay.delay,
         },
         zoomable: config.zoomable ? config.zoomable : false,
         wrapperSlide: config.wrapperSlide ? config.wrapperSlide : '.wrapperSlide',
@@ -27,7 +28,6 @@ function Slider(selector, config) {
     };
 
     var currentIndex = 0; // id active img
-    // Lấy ra các element sẽ dùng
     var slider = document.querySelector(`${selector}`);
     if (!slider) {
         console.log(`Not fine ${selector} selector`);
@@ -41,7 +41,6 @@ function Slider(selector, config) {
         return;
     }
     wrapper.style = 'width:100%;height:100%;display:flex;align-items:center;text-align:center;';
-    // wrapper.style = 'width:100%;height:100%;display:flex;align-items:center;overflow-y:hidden;text-align:center;overflow-x:hidden;scroll-behavior:smooth;';
 
     var btnLeft = slider.querySelector(config.navigation.left);
     if (!btnLeft) {
@@ -61,26 +60,24 @@ function Slider(selector, config) {
     var width = config.slidesPerView > 1 ? config.width / config.slidesPerView - config.spaceBetween : config.width / config.slidesPerView; // slide width
 
     const list = [...wrapper.children]; // Spread HTMLCollection vào mảng
-    var slideCount = list.length; // sum slide
-    if (slideCount > 1 && config.slidesPerView > slideCount) btnRight.style.display = 'block';
+    var slideCount = list.length; // Tổng số slide
+    if (slideCount > 1 && config.slidesPerView < slideCount) btnRight.style.display = 'block';
     // Lặp qua và css cho từng phần tử
     var imgWidthArr = [];
     var imgElementArr = [];
     list.map((item, index) => {
         item.classList.add(index);
-        index == currentIndex ? item.classList.add('active') : ''; // map chỉ chạy 1 lần
         if (config.slidesPerView == 2) {
+            index == currentIndex ? item.classList.add('active') : '';
             item.classList.contains('active')
                 ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-right:${config.spaceBetween / 2}px`)
                 : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-left:${config.spaceBetween / 2}px`);
         } else if (config.slidesPerView == 1) {
             item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;margin-right:${config.spaceBetween}px`;
         }
-        // (config.slidesPerView > 1 && index == 0) || (config.slidesPerView > 1 && index == list.length - 1)
-        //     ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;`)
-        //     : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;margin:0 ${config.spaceBetween}px`);
+
         for (var img of item.children) {
-            img.style = `display:block;max-width:100%;min-height:100%;object-fit:cover`; // img
+            img.style = `display:block;max-width:100%;min-height:100%;object-fit:cover`;
             imgElementArr.push(img); // push vào mảng để lưu lại DOM Element của mỗi ảnh
             imgWidthArr.push(img.offsetWidth); // push vào mảng để lưu lại giá trị chiều rộng của mỗi ảnh
         }
@@ -99,7 +96,7 @@ function Slider(selector, config) {
         paginationElement.style = `display:flex;justify-content:center;position:absolute;width:${config.width}px;margin-top:8px;`;
         const htmls = list
             .map((item, index) => {
-                return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${config.pagination.clickable == true ? `onclick="handleScrollById(${index})"` : ``}></div>`;
+                return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${config.pagination.clickable ? `onclick="handleScrollById(${index})"` : ``}></div>`;
             })
             .join('');
         paginationElement.innerHTML = htmls;
@@ -108,9 +105,9 @@ function Slider(selector, config) {
             if (config.pagination.visible.img && config.slidesPerView == 1) {
                 it.style = `min-width:${wrapper.offsetHeight / 10}px;height:${wrapper.offsetHeight / 10}px;background-image:url('${imgElementArr[index].src}');background-repeat:no-repeat;background-size:100% 100%;border:${index == 0 ? '2px' : '1px'} solid ${
                     index == 0 ? '#f06c2c' : 'black'
-                };opacity:0.5;border-radius:1px;margin:0 4px;${config.pagination.clickable == true ? 'cursor:pointer;' : ''}`;
+                };opacity:0.5;border-radius:1px;margin:0 4px;${config.pagination.clickable ? 'cursor:pointer;' : ''}`;
             } else {
-                it.style = `width:16px;height:16px;background-color:orange;border:1px solid black;;opacity:0.5;border-radius:50%;margin:0 4px;${config.pagination.clickable == true ? 'cursor:pointer;' : ''}`;
+                it.style = `width:16px;height:16px;background-color:orange;border:1px solid black;;opacity:0.5;border-radius:50%;margin:0 4px;${config.pagination.clickable ? 'cursor:pointer;' : ''}`;
             }
             if (index == 0) it.style.opacity = '1';
         });
@@ -118,7 +115,6 @@ function Slider(selector, config) {
 
     if (config.draggable) {
         wrapper.style.cursor = 'grab';
-        // wrapper.style = 'cursor:grab;width:100%;height:100%;display:flex;align-items:center;overflow-y:hidden;text-align:center;overflow-x:hidden;scroll-behavior:smooth;';
         let startX,
             direction = '',
             isDragging = false;
@@ -159,7 +155,7 @@ function Slider(selector, config) {
             mirror.style = `display:block;position:fixed;pointer-events:none;transform:translate(-50%, -50%);width:${imgWidthArr[currentIndex] / 5}px;height:${config.height / 5}px;background-image:url('${imgElementArr[currentIndex].src}');background-size:${imgWidthArr[currentIndex] * 1.5}px ${
                 config.height * 1.5
             }px;background-repeat:no-repeat;`;
-            let heightSlide = wrapper.offsetHeight; // chieu cao slide
+            let heightSlide = wrapper.offsetHeight; // Chiều cao slide
 
             let elementRect = imgElementArr[currentIndex].getBoundingClientRect();
             let elementLeft = Math.floor(elementRect.left);
@@ -179,9 +175,6 @@ function Slider(selector, config) {
         });
     }
 
-    // var scrolled = 0; // tracking scrolled pixel
-
-    // handle scroll
     handleScrollById = function (index) {
         currentIndex = index;
         var scrollTo = index * width;
@@ -193,18 +186,10 @@ function Slider(selector, config) {
                     : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-left:${config.spaceBetween / 2}px`);
             });
         }
-        // if (scrollTo > scrolled) {
-        // wrapper.scrollLeft = wrapper.scrollLeft + (scrollTo - scrolled);
-        // scrolled = scrollTo;
+
         wrapper.style.transform = `translateX(${-1 * scrollTo - index * config.spaceBetween}px)`;
         wrapper.style.transitionDuration = '0.2s';
-        // }
-        // if (scrollTo < scrolled) {
-        // wrapper.scrollLeft = wrapper.scrollLeft - (scrolled - scrollTo);
-        // scrolled = scrollTo;
-        // wrapper.style.transform = `translateX(${-1 * scrollTo - index * config.spaceBetween}px)`;
-        // wrapper.style.transitionDuration = '1s';
-        // }
+
         if (config.pagination.visible.display) {
             slider.querySelectorAll('.pagination-item').forEach((pi) => {
                 pi.classList.remove('active');
@@ -245,23 +230,55 @@ function Slider(selector, config) {
         }
     };
 
-    if (config.autoplay.enable == true && config.slidesPerView < slideCount) {
-        setInterval(
-            () => {
-                if (config.slidesPerView > 1) {
-                    if (currentIndex == slideCount - config.slidesPerView) {
+    if (config.autoplay.enable && config.slidesPerView < slideCount) {
+        if (config.autoplay.progress) {
+            let progressBar = slider.querySelector('.circular');
+            let value = slider.querySelector('.value-circular');
+            let progressValue = config.autoplay.delay;
+            let progress = setInterval(() => {
+                progressValue--;
+                value.textContent = `${progressValue}s`;
+                progressBar.style.background = `conic-gradient(#4d5bf9 ${progressValue * 3.6}deg,#cadcff ${progressValue * 3.6}deg)`;
+
+                if (progressValue == 1) {
+                    progressValue = config.autoplay.delay+1;
+                }
+
+            }, 1000);
+            setInterval(
+                () => {
+                    if (config.slidesPerView > 1) {
+                        if (currentIndex == slideCount - config.slidesPerView) {
+                            handleScrollById(0);
+                        } else {
+                            handleScrollById(++currentIndex);
+                        }
+                    } else if (currentIndex == slideCount - 1) {
                         handleScrollById(0);
                     } else {
                         handleScrollById(++currentIndex);
                     }
-                } else if (currentIndex == slideCount - 1) {
-                    handleScrollById(0);
-                } else {
-                    handleScrollById(++currentIndex);
-                }
-            },
-            config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
-        );
+                },
+                config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
+            );
+        } else {
+            setInterval(
+                () => {
+                    if (config.slidesPerView > 1) {
+                        if (currentIndex == slideCount - config.slidesPerView) {
+                            handleScrollById(0);
+                        } else {
+                            handleScrollById(++currentIndex);
+                        }
+                    } else if (currentIndex == slideCount - 1) {
+                        handleScrollById(0);
+                    } else {
+                        handleScrollById(++currentIndex);
+                    }
+                },
+                config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
+            );
+        }
     }
     btnRight.onclick = () => {
         handleScrollById(++currentIndex);

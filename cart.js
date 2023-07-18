@@ -103,8 +103,6 @@ window.handleChecked = function (id) {
         checkbox.checked = false;
     });
     document.querySelectorAll('.checkbox')[id].checked = true;
-    // CartLocal.push(document.querySelectorAll('.checkbox')[id].value);
-    // localStorage.setItem('CartData', JSON.stringify(CartLocal));
 };
 
 render(CartLocal);

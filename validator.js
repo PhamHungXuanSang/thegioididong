@@ -13,7 +13,7 @@ function Validator(formSelector) {
 
     // Tạo custom rule
     // Quy ước rule:
-    // 1. Họ Tên không được trống, không chứa chữ số
+    // 1. Họ Tên không được trống, không chứa chữ số, không có ký tự đặc biệt
     // 2. Số điện thoại không được trống, gồm 10 chữ số, không có chữ cái, bắt đầu bằng số 0
     var validatorRules = {
         required: function (value) {
