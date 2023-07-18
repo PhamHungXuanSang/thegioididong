@@ -156,20 +156,21 @@
         Slider('#sliderLibrary', {
             width: 800,
             height: 400,
-            slidesPerView: 2,
-            spaceBetween: 0, // FIX
-            draggable: true, // draggable thì không zoom
-            autoplay: { // FIX progress
+            slidesPerView: 4,
+            spaceBetween: 40, // FIX
+            draggable: false, // draggable thì không zoom
+            autoplay: {
+                // FIX progress
                 enable: true, // enable thì không zoom
                 delay: 3,
             },
-            zoomable: false, // zoomable khi không drag và không autoplay
+            zoomable: false, // zoomable khi không drag && không autoplay
             wrapperSlide: '.wrapperSlide',
             pagination: {
                 element: '.wrapperPagination',
                 visible: {
                     display: true,
-                    img: true,
+                    img: false,
                 },
                 clickable: true,
             },

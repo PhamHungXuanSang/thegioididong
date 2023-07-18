@@ -41,10 +41,7 @@ export const Phone = [
         brand: 'OPPO',
         name: 'OPPO Find X5 Pro 5G',
         color: [
-            [
-                'Tím',
-                'https://cdn.tgdd.vn/Products/Images/42/299034/oppo-find-n2-flip-purple-thumb-1-600x600-1-200x200.jpg',
-            ],
+            ['Tím', 'https://cdn.tgdd.vn/Products/Images/42/299034/oppo-find-n2-flip-purple-thumb-1-600x600-1-200x200.jpg'],
             ['Đen', 'https://cdn.tgdd.vn/Products/Images/42/299034/oppo-n2-flip-den-thumb-200x200.jpg'],
         ],
         oldPrice: 32990000,

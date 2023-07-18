@@ -72,8 +72,8 @@
     width: 300px;
     height: 40px;
     display: flex;
-    overflow: hidden;
     border-radius: 4px;
+    position: relative;
 }
 
 .header__top-search-input {
@@ -94,6 +94,57 @@
 
 .header__top-search-btn:hover {
     cursor: pointer;
+}
+
+.header__top-search-result {
+    max-height: 200px;
+    position: absolute;
+    top: 50px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 2;
+    overflow-y: scroll;
+    padding: 8px 0;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+}
+
+.header__top-search-result::-webkit-scrollbar {
+    display: none;
+}
+
+.result-item {
+    cursor: pointer;
+    display: flex;
+    width: 300px;
+    height: 60px;
+    padding: 8px 8px;
+}
+
+.result-item:hover {
+    background-color: #eee;
+}
+
+.result-item-info {
+    width: 82%;
+}
+
+.result-item-img {
+    margin-right: 8px;
+}
+
+.result-item-name {
+    height: 50%;
+    line-height: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-item-price {
+    color: #f70712;
+    height: 50%;
+    line-height: 22px;
 }
 
 .header__top-oder-infor {

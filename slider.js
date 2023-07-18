@@ -62,13 +62,20 @@ function Slider(selector, config) {
 
     const list = [...wrapper.children]; // Spread HTMLCollection vào mảng
     var slideCount = list.length; // sum slide
-    if (slideCount > 1) btnRight.style.display = 'block';
+    if (slideCount > 1 && config.slidesPerView > slideCount) btnRight.style.display = 'block';
     // Lặp qua và css cho từng phần tử
     var imgWidthArr = [];
     var imgElementArr = [];
     list.map((item, index) => {
         item.classList.add(index);
-        item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;margin-right:${config.spaceBetween}px`;
+        index == currentIndex ? item.classList.add('active') : ''; // map chỉ chạy 1 lần
+        if (config.slidesPerView == 2) {
+            item.classList.contains('active')
+                ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-right:${config.spaceBetween / 2}px`)
+                : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-left:${config.spaceBetween / 2}px`);
+        } else if (config.slidesPerView == 1) {
+            item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;margin-right:${config.spaceBetween}px`;
+        }
         // (config.slidesPerView > 1 && index == 0) || (config.slidesPerView > 1 && index == list.length - 1)
         //     ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;`)
         //     : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;margin:0 ${config.spaceBetween}px`);
@@ -178,6 +185,14 @@ function Slider(selector, config) {
     handleScrollById = function (index) {
         currentIndex = index;
         var scrollTo = index * width;
+        if (config.slidesPerView == 2) {
+            list.map((item, itemIndex) => {
+                currentIndex == itemIndex ? item.classList.add('active') : item.classList.remove('active');
+                item.classList.contains('active')
+                    ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-right:${config.spaceBetween / 2}px`)
+                    : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-left:${config.spaceBetween / 2}px`);
+            });
+        }
         // if (scrollTo > scrolled) {
         // wrapper.scrollLeft = wrapper.scrollLeft + (scrollTo - scrolled);
         // scrolled = scrollTo;
@@ -230,7 +245,7 @@ function Slider(selector, config) {
         }
     };
 
-    if (config.autoplay.enable == true) {
+    if (config.autoplay.enable == true && config.slidesPerView < slideCount) {
         setInterval(
             () => {
                 if (config.slidesPerView > 1) {

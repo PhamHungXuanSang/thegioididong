@@ -118,9 +118,39 @@ const renderDeal = (Phone) => {
 // Onclick push phone to productDetail obj
 window.pushPhone = function (index) {
     localStorage.setItem('productDetail', JSON.stringify(Phone[index]));
-    var product = JSON.parse(localStorage.getItem('productDetail'));
-    console.log(product);
 };
+
+var inputSearch = document.querySelector('.header__top-search-input');
+var searchResult = document.querySelector('.header__top-search-result');
+inputSearch.addEventListener('keyup', search);
+
+function search() {
+    setTimeout(() => {
+        const searchValue = inputSearch.value.toUpperCase();
+        const filterData = dealPhone.filter((item) => {
+            return item.name.toUpperCase().includes(searchValue);
+        });
+        if (inputSearch.value.length == 0) {
+            searchResult.style.display = 'none';
+        } else if (filterData.length == 0 && inputSearch.value.length > 0) {
+            searchResult.style.display = 'block';
+            searchResult.innerHTML = '<div style="width:300px;text-align:center;color:gray;font-style:italic;font-size:12px;">Không tìm thấy sản phẩm nào</div>';
+        } else {
+            searchResult.style.display = 'block';
+            searchResult.innerHTML = filterData
+                .map((item) => {
+                    return `<a href="./product-detail.html" class="result-item" onclick="pushPhone(${item.id})">
+                <img src="${item.color[0][1]}" alt="Ảnh" class="result-item-img" />
+                <div class="result-item-info">
+                    <div class="result-item-name">${item.name}</div>
+                    <div class="result-item-price">${item.newPrice.toLocaleString() + ' đ'}</div>
+                </div>
+            </a>`;
+                })
+                .join('');
+        }
+    }, 500)
+}
 
 renderCartNumber(CartLocal);
 renderDeal(dealPhone);

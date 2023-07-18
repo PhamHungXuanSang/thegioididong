@@ -166,11 +166,15 @@
                 }
             }
             var cartInfo = JSON.parse(localStorage.getItem('CartData'));
-            var namePhoneArr = {};
+            data['purchaseinfor'] = [];
             cartInfo.forEach((cI) => {
-                namePhoneArr[cI.name] = cI.quantity;
+                var phoneInfo = {};
+                phoneInfo['name'] = cI.name;
+                phoneInfo['price'] = cI.newPrice;
+                phoneInfo['quantity'] = cI.quantity;
+                phoneInfo['intoMoney'] = cI.quantity * cI.newPrice;
+                data['purchaseinfor'].push(phoneInfo);
             });
-            data['purchaseinfor'] = namePhoneArr;
             console.log(data);
         };
     </script>

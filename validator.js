@@ -20,7 +20,9 @@ function Validator(formSelector) {
             return value.length > 0 ? undefined : 'Vui lòng nhập trường này';
         },
         name: function (value) {
-            return !/\d/.test(value) ? undefined : 'Họ và Tên không đúng';
+            if (/^[a-z A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*$/.test(value)) {
+                return undefined;
+            } else return 'Họ và Tên không đúng';
         },
         number: function (value) {
             return !isNaN(value) && value[0] == 0 ? undefined : 'Số điện thoại không hợp lệ';
