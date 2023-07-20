@@ -121,9 +121,9 @@
                     <div id="sliderLibrary">
                         <div class="wrapperSlide"></div>
                         <div class="wrapperPagination"></div>
-                        <div class="progress" style="background-color: black; border-radius: 50%; width: 100px; height: 100px; position: relative; bottom: 100px; left: 700px">
-                            <div class="circular" style="background-color: #fff; border-radius: 50%; width: 80px; height: 80px; position: absolute; top: calc(50% - 40px); left: calc(50% - 40px)">
-                                <div class="value-circular" style="text-align: center; line-height: 80px; font-size: 24px; font-weight: 600">3s</div>
+                        <div class="progress">
+                            <div class="circular">
+                                <div class="value-circular"></div>
                             </div>
                         </div>
 
@@ -159,17 +159,21 @@
     <script src="./slider.js"></script>
     <script>
         Slider('#sliderLibrary', {
-            width: false,
+            width: 800,
             height: 400,
             slidesPerView: 1, // from 1 to 2
-            spaceBetween: 20, // from 5 to 40
-            draggable: false,
+            spaceBetween: 20, // from 5 pixel
+            draggable: true,
             autoplay: {
                 enable: true,
-                delay: 3, // from 1 to 10
-                progress: true,
+                disableOnInteraction: false, //FIX
+                delay: 3, // from 1 second
+                progress: {
+                    element: '.progress',
+                    display: true,
+                }
             },
-            zoomable: true,
+            zoomable: true, // FIX truyền class
             wrapperSlide: '.wrapperSlide',
             pagination: {
                 element: '.wrapperPagination',
