@@ -130,7 +130,7 @@
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
 
-                        <div id="mirror"></div>
+                        <div class="mirror"></div>
                     </div>
                     <div class="info">
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, ea voluptas expedita quis recusandae possimus suscipit facere, aperiam nostrum non saepe quaerat sit harum? Debitis laudantium fugiat similique asperiores voluptatum!</p>
@@ -157,19 +157,22 @@
         Slider('#sliderLibrary', {
             width: 800,
             height: 400,
-            slidesPerView: 2, // from 1 to 2
+            slidesPerView: 3, // from 1 to 2
             spaceBetween: 20, // from 5 pixel
             draggable: true,
             autoplay: {
-                enable: true,
+                enable: false,
                 disableOnInteraction: false, //FIX
-                delay: 4, // from 1 second
+                delay: 5, // from 1 second
                 progress: {
                     element: '.progress',
                     display: true,
                 }
             },
-            zoomable: true, // FIX truyền class
+            zoomable: {
+                element: '.mirror',
+                display: true,
+            },
             wrapperSlide: '.wrapperSlide',
             pagination: {
                 element: '.wrapperPagination',
