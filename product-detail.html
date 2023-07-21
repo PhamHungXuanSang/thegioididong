@@ -121,11 +121,7 @@
                     <div id="sliderLibrary">
                         <div class="wrapperSlide"></div>
                         <div class="wrapperPagination"></div>
-                        <div class="progress">
-                            <div class="circular">
-                                <div class="value-circular"></div>
-                            </div>
-                        </div>
+                        <div class="progress"></div>
 
                         <button class="prev">
                             <i class="fa-solid fa-chevron-left"></i>
@@ -161,13 +157,13 @@
         Slider('#sliderLibrary', {
             width: 800,
             height: 400,
-            slidesPerView: 1, // from 1 to 2
+            slidesPerView: 2, // from 1 to 2
             spaceBetween: 20, // from 5 pixel
             draggable: true,
             autoplay: {
                 enable: true,
                 disableOnInteraction: false, //FIX
-                delay: 3, // from 1 second
+                delay: 4, // from 1 second
                 progress: {
                     element: '.progress',
                     display: true,

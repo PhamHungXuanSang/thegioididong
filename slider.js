@@ -220,51 +220,60 @@ function Slider(selector, config) {
         console.log(`Not fine ${config.autoplay.progress.element} selector`);
     } else {
         if (config.autoplay.enable && config.slidesPerView < slideCount && config.autoplay.progress.display) {
-            progress.style = `background-color: black; border-radius: 50%; width:${(width * 5) / 100}px; height:${(width * 5) / 100}px; position: relative; bottom: ${(width * 5) / 100}px; left: calc(${width}px - ${(width * 5) / 100}px);`;
-
-            // Thằng vòng tròn trắng
-            var value = [...progress.children][0];
-            value.style = `background-color: #fff; border-radius: 50%; width:${(width * 4) / 100}px; height:${(width * 4) / 100}px; position: absolute; top: calc(50% - ${(width * 4) / 100/2}px); left: calc(50% - ${(width * 4) / 100/2}px)`;
-            // Thằng thời gian còn lại tính bằng giây
-            var progressValue = config.autoplay.delay;
-            progressValue.style = `text-align: center; line-height: ${(width * 4) / 100}px; font-size: 24px; font-weight: 600`;
-            value.textContent = `${progressValue}s`;
-            var progressId;
-            var autoplayId;
-            // Bắt sự kiện khi onScroll thì xóa interval
-            const onScroll = () => {
-                progressValue = config.autoplay.delay;
-                value.textContent = `${progressValue}s`;
-                progress.style.background = `conic-gradient(#4d5bf9 ${progressValue * 3.6}deg,#cadcff ${progressValue * 3.6}deg)`;
-                clearInterval(autoplayId);
-                clearInterval(progressId);
-            };
-
-            const onScrollStop = () => {
-                value.textContent = `${progressValue}s`;
+                var progressValue = config.autoplay.delay;
+                progress.style = `background:conic-gradient(#4d5bf9 ${progressValue * 3.6}deg,#cadcff ${progressValue * 3.6}deg);background-color: #4d5bf9; border-radius: 50%; width:${(wrapper.offsetWidth * 5) / 100}px; height:${(wrapper.offsetWidth * 5) / 100}px; position: relative; bottom: ${
+                    (wrapper.offsetWidth * 5) / 100
+                }px; left: calc(${wrapper.offsetWidth}px - ${(wrapper.offsetWidth * 5) / 100}px);`;
+                var value = document.createElement('div');
+                value.style = `background-color: #fff; border-radius: 50%; width:${(wrapper.offsetWidth * 4) / 100}px; height:${(wrapper.offsetWidth * 4) / 100}px; position: absolute; top: calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px); left: calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px)`;
+                progress.appendChild(value);
+                var progressValueElement = document.createElement('div');
+                progressValueElement.style = `text-align:center;line-height:${(wrapper.offsetWidth * 4) / 100}px;font-size:24px;font-weight:600;color:#4d5bf9;`;
+                value.appendChild(progressValueElement);
+                progressValueElement.innerText = progressValue;
+                progressValueElement.textContent = `${progressValue}s`;
                 progressId = setInterval(() => {
                     progressValue--;
-                    value.textContent = `${progressValue}s`;
+                    progressValueElement.textContent = `${progressValue}s`;
                     // Tìm cách đưa cái số deg thành 360 to 0
                     progress.style.background = `conic-gradient(#4d5bf9 ${progressValue * 3.6}deg,#cadcff ${progressValue * 3.6}deg)`;
 
                     progressValue == 1 ? (progressValue = config.autoplay.delay + 1) : '';
                 }, 1000);
-                autoplayId = setInterval(
-                    () => {
-                        if (config.slidesPerView > 1) {
-                            currentIndex == slideCount - config.slidesPerView ? handleScrollById(0) : handleScrollById(++currentIndex);
-                        } else if (currentIndex == slideCount - 1) {
-                            handleScrollById(0);
-                        } else {
-                            handleScrollById(++currentIndex);
-                        }
-                    },
-                    config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
-                );
-            };
-            wrapper.addEventListener('transitionstart', onScroll);
-            wrapper.addEventListener('transitionend', onScrollStop);
+                // Bắt sự kiện khi onScroll thì xóa interval
+                const onScroll = () => {
+                    progressValue = config.autoplay.delay;
+                    progressValueElement.textContent = `${progressValue}s`;
+                    progress.style.background = `conic-gradient(#4d5bf9 ${progressValue * 3.6}deg,#cadcff ${progressValue * 3.6}deg)`;
+                    clearInterval(autoplayId);
+                    clearInterval(progressId);
+                };
+
+                const onScrollStop = () => {
+                    progressValueElement.textContent = `${progressValue}s`;
+                    progressId = setInterval(() => {
+                        progressValue--;
+                        progressValueElement.textContent = `${progressValue}s`;
+                        // Tìm cách đưa cái số deg thành 360 to 0
+                        progress.style.background = `conic-gradient(#4d5bf9 ${progressValue * 3.6}deg,#cadcff ${progressValue * 3.6}deg)`;
+
+                        progressValue == 1 ? (progressValue = config.autoplay.delay + 1) : '';
+                    }, 1000);
+                    autoplayId = setInterval(
+                        () => {
+                            if (config.slidesPerView > 1) {
+                                currentIndex == slideCount - config.slidesPerView ? handleScrollById(0) : handleScrollById(++currentIndex);
+                            } else if (currentIndex == slideCount - 1) {
+                                handleScrollById(0);
+                            } else {
+                                handleScrollById(++currentIndex);
+                            }
+                        },
+                        config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
+                    );
+                };
+                wrapper.addEventListener('transitionstart', onScroll);
+                wrapper.addEventListener('transitionend', onScrollStop);
         }
     }
     if (config.autoplay.enable && config.slidesPerView < slideCount) {
