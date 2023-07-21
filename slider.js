@@ -63,9 +63,9 @@ function Slider(selector, config) {
     btnRight.style = `cursor:pointer;position:absolute;left:0;top:calc(100% / 2 - 30px);left:calc(100% - 30px);width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;opacity:0.6;border-top-left-radius:6px;border-bottom-left-radius:6px;box-shadow:-6px 0 4px rgba(0, 0, 0, 0.05);`;
 
     var width = config.slidesPerView > 1 ? config.width / config.slidesPerView - config.spaceBetween : config.width / config.slidesPerView; // slide width
-    console.log(width);
 
     const list = [...wrapper.children]; // Spread HTMLCollection vào mảng
+    const List = list; // Spread HTMLCollection vào mảng
     var slideCount = list.length; // Tổng số slide
     if (slideCount > 1 && config.slidesPerView < slideCount) btnRight.style.display = 'block';
     // Lặp qua và css cho từng phần tử
@@ -80,14 +80,26 @@ function Slider(selector, config) {
                 : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-left:${config.spaceBetween / 2}px`);
         } else if (config.slidesPerView == 1) {
             item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;margin-right:${config.spaceBetween}px`;
-        } else if (config.slidesPerView == 3) {
+        } else if (config.slidesPerView > 2) {
             index == currentIndex ? item.classList.add('active') : '';
-            index == currentIndex + 2 ? item.classList.add('active') : '';
+            index == currentIndex + (config.slidesPerView - 1) ? item.classList.add('active') : '';
             if (item.classList.contains('active')) {
                 item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;`;
             } else {
                 item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;margin:0 ${config.spaceBetween / 2}px`;
             }
+            wrapper.addEventListener('transitionstart', () => {
+                item.classList.remove('active');
+                index == currentIndex ? item.classList.add('active') : '';
+                index == currentIndex + (config.slidesPerView - 1) ? item.classList.add('active') : '';
+                if (item.classList.contains('active')) {
+                    item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;`;
+                } else {
+                    index == currentIndex - 1
+                        ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%`)
+                        : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;margin:0 ${config.spaceBetween / 2}px`);
+                }
+            });
         }
 
         for (var img of item.children) {
@@ -202,36 +214,9 @@ function Slider(selector, config) {
                     : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-left:${config.spaceBetween / 2}px`);
             });
         }
-        if (config.slidesPerView == 3) {
-            list.forEach((item, itemIndex) => {
-                // if (itemIndex == currentIndex) {
-                //     item.classList.add('active');
-                // } else {
-                //     item.classList.remove('active');
-                // }
-                // if (itemIndex == currentIndex + 2) {
-                //     item.classList.add('active');
-                // }
-                if (itemIndex == currentIndex) {
-                    item.classList.add('active');
-                }
-                if (itemIndex == currentIndex + 2) {
-                    console.log('zo +2');
-                    item.classList.add('active');
-                } else if (itemIndex != currentIndex && itemIndex != currentIndex + 2) {
-                    console.log('zo remove');
-                    item.classList.remove('active');
-                }
-                if (item.classList.contains('active')) {
-                    item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;`;
-                } else {
-                    item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;margin:0 ${config.spaceBetween / 2}px`;
-                }
-            });
-        }
 
         wrapper.style.transform = `translateX(${-1 * scrollTo - index * config.spaceBetween}px)`;
-        wrapper.style.transitionDuration = '1s';
+        wrapper.style.transitionDuration = '5s';
 
         if (config.pagination.visible.display) {
             slider.querySelectorAll('.pagination-item').forEach((pi) => {
