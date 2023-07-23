@@ -25,7 +25,7 @@ function Slider(selector, config) {
                 display: config.pagination.visible.display ? config.pagination.visible.display : false,
                 img: config.pagination.visible.img ? config.pagination.visible.img : false,
             },
-            clickable: config.pagination.clickable ? config.pagination.clickable : true,
+            clickable: config.pagination.clickable ? config.pagination.clickable : false,
         },
         navigation: {
             left: config.navigation.left ? config.navigation.left : '.prev',
@@ -35,37 +35,39 @@ function Slider(selector, config) {
 
     var currentIndex = 0; // id active img
     var slider = document.querySelector(`${selector}`);
+    var wrapper = slider.querySelector(config.wrapperSlide); // img-slideShow
     if (!slider) {
         console.log(`Not find ${selector} selector`);
         return;
     }
-    slider.style = `width:${config.width}px;height:${config.height}px;overflow:hidden;position:relative;`; // thằng này phải relative
-
-    var wrapper = slider.querySelector(config.wrapperSlide); // img-slideShow
     if (!wrapper) {
         console.log(`Not find ${config.wrapperSlide} selector`);
         return;
     }
-    wrapper.style = 'width:100%;height:100%;display:flex;align-items:center;text-align:center;';
+    wrapper.style = `width:${config.width}px;height:${config.height}px;display:flex;align-items:center;text-align:center;`;
+    slider.style = `width:${config.width}px;height:calc(${config.height}px + ${wrapper.offsetHeight / 10 + 8}px);overflow:hidden;position:relative;`;
 
     var btnLeft = slider.querySelector(config.navigation.left);
     if (!btnLeft) {
         console.log(`Not find ${config.navigation.left} selector`);
         return;
     }
-    btnLeft.style = 'cursor:pointer;position:absolute;top:calc(100% / 2 - 30px);width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;opacity:0.6;border-top-right-radius:6px;border-bottom-right-radius:6px;box-shadow:6px 0 4px rgba(0, 0, 0, 0.05);';
+    btnLeft.style = `cursor:pointer;position:absolute;top:calc(100% / 2 - (30px + ${
+        wrapper.offsetHeight / 10 / 2
+    }px));width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;opacity:0.6;border-top-right-radius:6px;border-bottom-right-radius:6px;box-shadow:6px 0 4px rgba(0, 0, 0, 0.05);`;
 
     var btnRight = slider.querySelector(config.navigation.right);
     if (!btnRight) {
         console.log(`Not find ${config.navigation.right} selector`);
         return;
     }
-    btnRight.style = `cursor:pointer;position:absolute;left:0;top:calc(100% / 2 - 30px);left:calc(100% - 30px);width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;opacity:0.6;border-top-left-radius:6px;border-bottom-left-radius:6px;box-shadow:-6px 0 4px rgba(0, 0, 0, 0.05);`;
+    btnRight.style = `cursor:pointer;position:absolute;left:0;top:calc(100% / 2 - (30px + ${
+        wrapper.offsetHeight / 10 / 2
+    }px));left:calc(100% - 30px);width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;opacity:0.6;border-top-left-radius:6px;border-bottom-left-radius:6px;box-shadow:-6px 0 4px rgba(0, 0, 0, 0.05);`;
 
     var width = config.slidesPerView > 1 ? config.width / config.slidesPerView - config.spaceBetween : config.width / config.slidesPerView; // slide width
 
     const list = [...wrapper.children]; // Spread HTMLCollection vào mảng
-    const List = list; // Spread HTMLCollection vào mảng
     var slideCount = list.length; // Tổng số slide
     if (slideCount > 1 && config.slidesPerView < slideCount) btnRight.style.display = 'block';
     // Lặp qua và css cho từng phần tử
@@ -84,20 +86,46 @@ function Slider(selector, config) {
             index == currentIndex ? item.classList.add('active') : '';
             index == currentIndex + (config.slidesPerView - 1) ? item.classList.add('active') : '';
             if (item.classList.contains('active')) {
-                item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;`;
+                item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;`;
             } else {
-                item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;margin:0 ${config.spaceBetween / 2}px`;
+                item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin:0 ${config.spaceBetween}px`;
+                if (config.slidesPerView == 4) {
+                    index == currentIndex + 1
+                        ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin-left: ${config.spaceBetween}px`)
+                        : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin:0 ${config.spaceBetween}px`);
+                }
+                if (config.slidesPerView == 5) {
+                    if (index == currentIndex + 1) {
+                        item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin-left: ${config.spaceBetween}px`;
+                    } else if (index == currentIndex + 2) {
+                        item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin-left: ${config.spaceBetween}px`;
+                    } else item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin:0 ${config.spaceBetween}px`;
+                }
             }
             wrapper.addEventListener('transitionstart', () => {
                 item.classList.remove('active');
                 index == currentIndex ? item.classList.add('active') : '';
                 index == currentIndex + (config.slidesPerView - 1) ? item.classList.add('active') : '';
                 if (item.classList.contains('active')) {
-                    item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;`;
+                    item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;`;
                 } else {
-                    index == currentIndex - 1
-                        ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%`)
-                        : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 3}px);height:100%;margin:0 ${config.spaceBetween / 2}px`);
+                    if (index < currentIndex) {
+                        item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%`;
+                    } else {
+                        item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin:0 ${config.spaceBetween}px`;
+                        if (config.slidesPerView == 4) {
+                            index == currentIndex + 1
+                                ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin-left: ${config.spaceBetween}px`)
+                                : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin:0 ${config.spaceBetween}px`);
+                        }
+                        if (config.slidesPerView == 5) {
+                            if (index == currentIndex + 1) {
+                                item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin-left: ${config.spaceBetween}px`;
+                            } else if (index == currentIndex + 2) {
+                                item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin-left: ${config.spaceBetween}px`;
+                            } else item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;margin:0 ${config.spaceBetween}px`;
+                        }
+                    }
                 }
             });
         }
@@ -110,7 +138,6 @@ function Slider(selector, config) {
     }); // slide
 
     // render pagination
-    if (config.slidesPerView > 1) list.splice(list.length - (config.slidesPerView - 1), config.slidesPerView);
     if (config.pagination.visible.display) {
         var paginationElement = slider.querySelector(`${config.pagination.element}`); // img-preview
         if (!paginationElement) {
@@ -120,13 +147,23 @@ function Slider(selector, config) {
         paginationElement.style = `display:flex;justify-content:center;position:absolute;width:${config.width}px;margin-top:8px;`;
         const htmls = list
             .map((item, index) => {
-                return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${config.pagination.clickable ? `onclick="handleScrollById(${index})"` : ``}></div>`;
+                return config.pagination.clickable
+                    ? `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${
+                          config.slidesPerView == 1
+                              ? `onclick="handleScrollById(${index})"}></div>`
+                              : index >= slideCount - config.slidesPerView // Trường hợp khác 1, kiểm tra nếu là ảnh cuối
+                              ? `onclick="handleScrollById(${slideCount - config.slidesPerView}); handleChangeActive(${index})"}></div>`
+                              : `onclick="handleScrollById(${index})"}></div>`
+                      }</div>`
+                    : `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}"></div>`;
+                // Nếu có clickable thì có onclick không thì `` cả hai trường hợp đếu cần xử lý đổi active khi chuyển slide.
+                // Với trường hợp có onclick thì cần chia ra khi slidesPerView == 1 handle(index), khi slidesPerView lớn hơn 1 &&  thì handle(slideCount-slidesPerView)
             })
             .join('');
         paginationElement.innerHTML = htmls;
         var paginationItem = [...paginationElement.children];
         paginationItem.forEach((it, index) => {
-            if (config.pagination.visible.img && config.slidesPerView == 1) {
+            if (config.pagination.visible.img) {
                 it.style = `min-width:${wrapper.offsetHeight / 10}px;height:${wrapper.offsetHeight / 10}px;background-image:url('${imgElementArr[index].src}');background-repeat:no-repeat;background-size:100% 100%;border:${index == 0 ? '2px' : '1px'} solid ${
                     index == 0 ? '#f06c2c' : 'black'
                 };opacity:0.5;border-radius:1px;margin:0 4px;${config.pagination.clickable ? 'cursor:pointer;' : ''}`;
@@ -149,7 +186,7 @@ function Slider(selector, config) {
         };
         const dragStop = () => {
             isDragging = false;
-            if (direction == 'next' && currentIndex + 1 <= slideCount - 1) {
+            if (direction == 'next' && currentIndex < slideCount - config.slidesPerView) {
                 handleScrollById(++currentIndex);
                 direction = '';
             } else if (direction == 'prev' && currentIndex > 0) {
@@ -203,6 +240,24 @@ function Slider(selector, config) {
         }
     }
 
+    handleChangeActive = function (index) {
+        if (config.pagination.visible.display) {
+            slider.querySelectorAll('.pagination-item').forEach((pi) => {
+                pi.classList.remove('active');
+                if (pi.id == index) pi.classList.add('active');
+            });
+            paginationItem.forEach((e) => {
+                if (e.classList.contains('active')) {
+                    e.style.opacity = `1`;
+                    config.pagination.visible.img ? (e.style.border = `2px solid #f06c2c`) : (e.style.border = `1px solid black`);
+                } else {
+                    e.style.opacity = `0.5`;
+                    e.style.border = `1px solid black`;
+                }
+            });
+        }
+    };
+
     handleScrollById = function (index) {
         currentIndex = index;
         var scrollTo = index * width;
@@ -215,24 +270,14 @@ function Slider(selector, config) {
             });
         }
 
-        wrapper.style.transform = `translateX(${-1 * scrollTo - index * config.spaceBetween}px)`;
-        wrapper.style.transitionDuration = '5s';
-
-        if (config.pagination.visible.display) {
-            slider.querySelectorAll('.pagination-item').forEach((pi) => {
-                pi.classList.remove('active');
-                if (pi.id == index) pi.classList.add('active');
-            });
-            paginationItem.forEach((e) => {
-                if (e.classList.contains('active')) {
-                    e.style.opacity = `1`;
-                    config.pagination.visible.img && config.slidesPerView == 1 ? (e.style.border = `2px solid #f06c2c`) : (e.style.border = `1px solid black`);
-                } else {
-                    e.style.opacity = `0.5`;
-                    e.style.border = `1px solid black`;
-                }
-            });
+        if (config.slidesPerView == 1 || config.slidesPerView == 2) {
+            wrapper.style.transform = `translateX(${-1 * scrollTo - index * config.spaceBetween}px)`;
+        } else if (config.slidesPerView > 2) {
+            wrapper.style.transform = `translateX(${(-index * (wrapper.offsetWidth - config.spaceBetween * (config.slidesPerView - 1))) / config.slidesPerView}px)`;
         }
+        wrapper.style.transitionDuration = '1s';
+
+        handleChangeActive(index);
 
         index > 0 ? (btnLeft.style.display = 'block') : (btnLeft.style.display = 'none');
         index == slideCount - 1 ? (btnRight.style.display = 'none') : (btnRight.style.display = 'block');
@@ -240,6 +285,7 @@ function Slider(selector, config) {
         if (config.slidesPerView > 1) {
             currentIndex == slideCount - config.slidesPerView ? (btnRight.style.display = 'none') : (btnRight.style.display = 'block');
         }
+        console.log(currentIndex);
     };
 
     var progress = slider.querySelector(`${config.autoplay.progress.element}`);
@@ -248,9 +294,9 @@ function Slider(selector, config) {
     } else {
         if (config.autoplay.enable && config.slidesPerView < slideCount && config.autoplay.progress.display) {
             var progressValue = config.autoplay.delay;
-            progress.style = `background:conic-gradient(#4d5bf9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff ${progressValue}deg);background-color: #4d5bf9; border-radius: 50%; width:${(wrapper.offsetWidth * 5) / 100}px; height:${
+            progress.style = `background:conic-gradient(#4d5bf9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg);background-color: #4d5bf9; border-radius: 50%; width:${(wrapper.offsetWidth * 5) / 100}px; height:${(wrapper.offsetWidth * 5) / 100}px; position: relative; bottom: ${
                 (wrapper.offsetWidth * 5) / 100
-            }px; position: relative; bottom: ${(wrapper.offsetWidth * 5) / 100}px; left: calc(${wrapper.offsetWidth}px - ${(wrapper.offsetWidth * 5) / 100}px);`;
+            }px; left: calc(${wrapper.offsetWidth}px - ${(wrapper.offsetWidth * 5) / 100}px);`;
             var value = document.createElement('div');
             value.style = `background-color: #fff; border-radius: 50%; width:${(wrapper.offsetWidth * 4) / 100}px; height:${(wrapper.offsetWidth * 4) / 100}px; position: absolute; top: calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px); left: calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px)`;
             progress.appendChild(value);
@@ -262,7 +308,7 @@ function Slider(selector, config) {
             progressId = setInterval(() => {
                 progressValue -= 0.01;
                 progressValueElement.textContent = `${parseInt(progressValue)}s`;
-                progress.style.background = `conic-gradient(#4d5bf9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff ${progressValue}deg)`;
+                progress.style.background = `conic-gradient(#4d5bf9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg)`;
 
                 progressValue == 1 ? (progressValue = config.autoplay.delay + 1) : '';
             }, 10);
@@ -270,7 +316,7 @@ function Slider(selector, config) {
             const onScroll = () => {
                 progressValue = config.autoplay.delay;
                 progressValueElement.textContent = `${progressValue}s`;
-                progress.style.background = `conic-gradient(#4d5bf9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff ${progressValue}deg)`;
+                progress.style.background = `conic-gradient(#4d5bf9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg)`;
                 clearInterval(autoplayId);
                 clearInterval(progressId);
             };
@@ -280,7 +326,7 @@ function Slider(selector, config) {
                 progressId = setInterval(() => {
                     progressValue -= 0.01;
                     progressValueElement.textContent = `${parseInt(progressValue)}s`;
-                    progress.style.background = `conic-gradient(#4d5bf9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff ${progressValue}deg)`;
+                    progress.style.background = `conic-gradient(#4d5bf9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg)`;
 
                     progressValue == 1 ? (progressValue = config.autoplay.delay + 1) : '';
                 }, 10);

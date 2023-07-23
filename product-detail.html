@@ -157,19 +157,20 @@
         Slider('#sliderLibrary', {
             width: 800,
             height: 400,
-            slidesPerView: 3, // from 1 to 3
+            slidesPerView: 2, // from 1 to 5
             spaceBetween: 20, // from 5 pixel
             draggable: true,
             autoplay: {
-                enable: false,
+                enable: true,
                 disableOnInteraction: false, //FIX
                 delay: 5, // from 1 second
                 progress: {
                     element: '.progress',
                     display: true,
-                }
+                },
             },
             zoomable: {
+                // Zoomable in-case slidesPerView=1 && autoplay.enable=false && draggable=false
                 element: '.mirror',
                 display: true,
             },

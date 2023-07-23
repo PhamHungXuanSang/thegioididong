@@ -1,4 +1,4 @@
-import { Phone } from './Data.js';
+import { Phone, Cart } from './Data.js';
 
 // Handle image slider
 var scrollFirst = 0;
