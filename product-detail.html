@@ -168,9 +168,7 @@
                                 <img src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg" style="display: block; max-width: 100%; min-height: 100%; object-fit: cover" />
                             </div>
                         </div>
-                        <div class="wrapperPagination">
-                            
-                        </div>
+                        <div class="wrapperPagination"></div>
                         <div class="progress"></div>
 
                         <button class="prev">
@@ -207,7 +205,7 @@
         new Slider('#sliderLibrary', {
             width: 800,
             height: 400,
-            slidesPerView: 3, // from 1 to 5
+            slidesPerView: 2, // from 1 to 5
             spaceBetween: 20, // from 5 pixel
             draggable: true,
             autoplay: {
@@ -242,11 +240,11 @@
         new Slider('#slider', {
             width: 600,
             height: 300,
-            slidesPerView: 2, // from 1 to 5
+            slidesPerView: 1, // from 1 to 5
             spaceBetween: 20, // from 5 pixel
-            draggable: true,
+            draggable: false,
             autoplay: {
-                enable: true,
+                enable: false,
                 // disableOnInteraction: false, //FIX
                 delay: 3, // from 1 second
                 progress: {

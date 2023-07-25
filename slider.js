@@ -1,4 +1,4 @@
-// // Test library
+// ================ Code Library ================
 function Slider(selector, config) {
     config = {
         width: config.width ? config.width : 800,
@@ -175,21 +175,30 @@ function Slider(selector, config) {
         };
         paginationElement.innerHTML = list
             .map((item, index) => {
-                return config.pagination.clickable
-                    ? `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${
-                          config.slidesPerView == 1
-                              ? `onclick="handleScrollById(${index});"></div>`
-                              : index >= slideCount - config.slidesPerView // Trường hợp khác 1, kiểm tra nếu là ảnh cuối
-                              ? `onclick="handleScrollById(${slideCount - config.slidesPerView}); handleChangeActive(${index});"></div>`
-                              : `onclick="handleScrollById(${index})"></div>`
-                      }</div>`
-                    : `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}"></div>`;
+                if (config.pagination.clickable) {
+                    return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${
+                        config.slidesPerView == 1 ? `click="${index}"></div>` : index >= slideCount - config.slidesPerView ? `click="${slideCount - config.slidesPerView}|${index}"></div>` : `click="${index}"></div>`
+                    }</div>`;
+                } else {
+                    return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}"></div>`;
+                }
                 // Nếu có clickable thì có onclick không thì `` cả hai trường hợp đếu cần xử lý đổi active khi chuyển slide.
-                // Với trường hợp có onclick thì cần chia ra khi slidesPerView == 1 handle(index), khi slidesPerView lớn hơn 1 &&  thì handle(slideCount-slidesPerView)
+                // Với trường hợp có onclick thì cần chia ra khi slidesPerView == 1 handle(index), khi slidesPerView lớn hơn 1 && index >= slideCount-slidesPerView thì handle(slideCount-slidesPerView)
             })
             .join('');
+
         var paginationItem = [...paginationElement.children];
         paginationItem.forEach((it, index) => {
+            if (it.getAttribute('click')) {
+                it.addEventListener('click', () => {
+                    if (it.getAttribute('click').split('|').length > 1) {
+                        this.handleScrollById(it.getAttribute('click').split('|')[0]);
+                        this.handleChangeActive(it.getAttribute('click').split('|')[1]);
+                    } else {
+                        this.handleScrollById(it.getAttribute('click'));
+                    }
+                });
+            }
             if (config.pagination.visible.img) {
                 it.style = `min-width:${wrapper.offsetHeight / 10}px;height:${wrapper.offsetHeight / 10}px;background-image:url('${imgElementArr[index].src}');background-repeat:no-repeat;background-size:100% 100%;border:${index == 0 ? '2px' : '1px'} solid ${
                     index == 0 ? '#2879f9' : 'black'
@@ -278,10 +287,12 @@ function Slider(selector, config) {
             });
         }
 
-        if (config.slidesPerView == 1 || config.slidesPerView == 2) {
+        if ((config.slidesPerView == 1 && config.slidesPerView < slideCount) || (config.slidesPerView == 2 && config.slidesPerView < slideCount)) {
             wrapper.style.transform = `translateX(${-1 * scrollTo - index * config.spaceBetween}px)`;
-        } else if (config.slidesPerView > 2) {
+        } else if (config.slidesPerView > 2 && config.slidesPerView < slideCount) {
             wrapper.style.transform = `translateX(${(-index * (wrapper.offsetWidth - config.spaceBetween * (config.slidesPerView - 1))) / config.slidesPerView}px)`;
+        } else {
+            console.log('slidesPerView > slideCount');
         }
         wrapper.style.transitionDuration = '0.6s';
 
