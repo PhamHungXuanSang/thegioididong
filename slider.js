@@ -33,9 +33,11 @@ function Slider(selector, config) {
         },
     };
 
-    var currentIndex = 0; // id active img
-    var slider = document.querySelector(`${selector}`);
-    var wrapper = slider.querySelector(config.wrapperSlide); // img-slideShow
+    var currentIndex = 0,
+        progressId,
+        autoplayId,
+        slider = document.querySelector(`${selector}`),
+        wrapper = slider.querySelector(config.wrapperSlide); // img-slideShow
     if (!slider) {
         console.log(`Not find ${selector} selector`);
         return;
@@ -56,14 +58,10 @@ function Slider(selector, config) {
         wrapper.offsetHeight / 10 / 2
     }px));width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;color:#2879f9;opacity:0.6;border-top-right-radius:6px;border-bottom-right-radius:6px;box-shadow:6px 0 4px rgba(0, 0, 0, 0.3);`;
     btnLeft.addEventListener('mouseenter', () => {
-        btnLeft.style.opacity = '1';
-        btnLeft.style.transitionDuration = '200ms';
-        btnLeft.style.transform = 'scale(1.05)';
+        (btnLeft.style.opacity = '1'), (btnLeft.style.transitionDuration = '200ms'), (btnLeft.style.transform = 'scale(1.05)');
     });
     btnLeft.addEventListener('mouseleave', () => {
-        btnLeft.style.opacity = '0.6';
-        btnLeft.style.transitionDuration = '200ms';
-        btnLeft.style.transform = 'scale(1)';
+        (btnLeft.style.opacity = '0.6'), (btnLeft.style.transitionDuration = '200ms'), (btnLeft.style.transform = 'scale(1)');
     });
 
     var btnRight = slider.querySelector(config.navigation.right);
@@ -75,14 +73,10 @@ function Slider(selector, config) {
         wrapper.offsetHeight / 10 / 2
     }px));left:calc(100% - 30px);width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;color:#2879f9;opacity:0.6;border-top-left-radius:6px;border-bottom-left-radius:6px;box-shadow:-6px 0 4px rgba(0, 0, 0, 0.5);`;
     btnRight.addEventListener('mouseenter', () => {
-        btnRight.style.opacity = '1';
-        btnRight.style.transitionDuration = '200ms';
-        btnRight.style.transform = 'scale(1.05)';
+        (btnRight.style.opacity = '1'), (btnRight.style.transitionDuration = '200ms'), (btnRight.style.transform = 'scale(1.05)');
     });
     btnRight.addEventListener('mouseleave', () => {
-        btnRight.style.opacity = '0.6';
-        btnRight.style.transitionDuration = '200ms';
-        btnRight.style.transform = 'scale(1)';
+        (btnRight.style.opacity = '0.6'), (btnRight.style.transitionDuration = '200ms'), (btnRight.style.transform = 'scale(1)');
     });
 
     var width = config.slidesPerView > 1 ? config.width / config.slidesPerView - config.spaceBetween : config.width / config.slidesPerView; // slide width
@@ -91,20 +85,20 @@ function Slider(selector, config) {
     var slideCount = list.length; // Tổng số slide
     if (slideCount > 1 && config.slidesPerView < slideCount) btnRight.style.display = 'block';
     // Lặp qua và css cho từng phần tử
-    var imgWidthArr = [];
-    var imgElementArr = [];
+    var imgWidthArr = [],
+        imgElementArr = [];
     list.forEach((item, index) => {
         item.classList.add(index);
         if (config.slidesPerView == 2) {
-            index == currentIndex ? item.classList.add('active') : '';
+            if (index == currentIndex) item.classList.add('active');
             item.classList.contains('active')
                 ? (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-right:${config.spaceBetween / 2}px`)
                 : (item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView} - ${config.spaceBetween / 2}px);height:100%;margin-left:${config.spaceBetween / 2}px`);
         } else if (config.slidesPerView == 1) {
             item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc(100%/${config.slidesPerView});height:100%;margin-right:${config.spaceBetween}px`;
         } else if (config.slidesPerView > 2) {
-            index == currentIndex ? item.classList.add('active') : '';
-            index == currentIndex + (config.slidesPerView - 1) ? item.classList.add('active') : '';
+            if (index == currentIndex) item.classList.add('active');
+            if (index == currentIndex + (config.slidesPerView - 1)) item.classList.add('active');
             if (item.classList.contains('active')) {
                 item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;`;
             } else {
@@ -124,8 +118,8 @@ function Slider(selector, config) {
             }
             wrapper.addEventListener('transitionstart', () => {
                 item.classList.remove('active');
-                index == currentIndex ? item.classList.add('active') : '';
-                index == currentIndex + (config.slidesPerView - 1) ? item.classList.add('active') : '';
+                if (index == currentIndex) item.classList.add('active');
+                if (index == currentIndex + (config.slidesPerView - 1)) item.classList.add('active');
                 if (item.classList.contains('active')) {
                     item.style = `display:flex;align-items:center;justify-content:center;background-color:#fff;min-width:calc((100% - (${config.spaceBetween * (config.slidesPerView - 1)}px)) / ${config.slidesPerView});height:100%;`;
                 } else {
@@ -151,7 +145,7 @@ function Slider(selector, config) {
         }
 
         for (var img of item.children) {
-            img.style = `display:block;max-width:100%;min-height:100%;object-fit:cover`;
+            img.style = `display:block;max-width:100%;height:100%;object-fit:cover`;
             imgElementArr.push(img); // push vào mảng để lưu lại DOM Element của mỗi ảnh
             imgWidthArr.push(img.offsetWidth); // push vào mảng để lưu lại giá trị chiều rộng của mỗi ảnh
         }
@@ -165,22 +159,35 @@ function Slider(selector, config) {
             return;
         }
         paginationElement.style = `display:flex;justify-content:center;position:absolute;width:${config.width}px;margin-top:8px;`;
-        const htmls = list
+        this.handleChangeActive = function (index) {
+            slider.querySelectorAll('.pagination-item').forEach((pi) => {
+                pi.classList.remove('active');
+                if (pi.id == index) pi.classList.add('active');
+            });
+            paginationItem.forEach((e) => {
+                if (e.classList.contains('active')) {
+                    e.style.opacity = `1`;
+                    config.pagination.visible.img ? (e.style.border = `2px solid #2879f9`) : (e.style.border = `1px solid black`);
+                } else {
+                    (e.style.opacity = `0.5`), (e.style.border = `1px solid black`);
+                }
+            });
+        };
+        paginationElement.innerHTML = list
             .map((item, index) => {
                 return config.pagination.clickable
                     ? `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${
                           config.slidesPerView == 1
-                              ? `onclick="handleScrollById(${index})"}></div>`
+                              ? `onclick="handleScrollById(${index});"></div>`
                               : index >= slideCount - config.slidesPerView // Trường hợp khác 1, kiểm tra nếu là ảnh cuối
-                              ? `onclick="handleScrollById(${slideCount - config.slidesPerView}); handleChangeActive(${index})"}></div>`
-                              : `onclick="handleScrollById(${index})"}></div>`
+                              ? `onclick="handleScrollById(${slideCount - config.slidesPerView}); handleChangeActive(${index});"></div>`
+                              : `onclick="handleScrollById(${index})"></div>`
                       }</div>`
                     : `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}"></div>`;
                 // Nếu có clickable thì có onclick không thì `` cả hai trường hợp đếu cần xử lý đổi active khi chuyển slide.
                 // Với trường hợp có onclick thì cần chia ra khi slidesPerView == 1 handle(index), khi slidesPerView lớn hơn 1 &&  thì handle(slideCount-slidesPerView)
             })
             .join('');
-        paginationElement.innerHTML = htmls;
         var paginationItem = [...paginationElement.children];
         paginationItem.forEach((it, index) => {
             if (config.pagination.visible.img) {
@@ -207,10 +214,10 @@ function Slider(selector, config) {
         const dragStop = () => {
             isDragging = false;
             if (direction == 'next' && currentIndex < slideCount - config.slidesPerView) {
-                handleScrollById(++currentIndex);
+                this.handleScrollById(++currentIndex);
                 direction = '';
             } else if (direction == 'prev' && currentIndex > 0) {
-                handleScrollById(--currentIndex);
+                this.handleScrollById(--currentIndex);
                 direction = '';
             }
         };
@@ -241,45 +248,25 @@ function Slider(selector, config) {
                 }px;background-repeat:no-repeat;`;
                 let heightSlide = wrapper.offsetHeight; // Chiều cao slide
 
-                let elementRect = imgElementArr[currentIndex].getBoundingClientRect();
-                let elementLeft = Math.floor(elementRect.left);
-                let elementTop = Math.floor(elementRect.top);
+                let elementRect = imgElementArr[currentIndex].getBoundingClientRect(),
+                    elementLeft = Math.floor(elementRect.left),
+                    elementTop = Math.floor(elementRect.top);
                 // lấy đc w tại chuột so với viền trái ảnh
                 // lấy đc w tại chuột so với viền trái trình duyệt = e.pageX
 
-                let mouseWithImgBorderX = e.pageX - elementLeft;
-                let mouseWithImgBorderY = e.pageY - elementTop;
+                let mouseWithImgBorderX = e.pageX - elementLeft,
+                    mouseWithImgBorderY = e.pageY - elementTop;
 
-                let percentMouseByW = Math.floor((mouseWithImgBorderX / imgWidthArr[currentIndex]) * 100);
-                let percentMouseByH = Math.floor((mouseWithImgBorderY / heightSlide) * 100);
+                let percentMouseByW = Math.floor((mouseWithImgBorderX / imgWidthArr[currentIndex]) * 100),
+                    percentMouseByH = Math.floor((mouseWithImgBorderY / heightSlide) * 100);
 
-                mirror.style.backgroundPosition = `${percentMouseByW}% ${percentMouseByH}%`;
-                mirror.style.top = `${e.clientY}px`;
-                mirror.style.left = `${e.clientX}px`;
+                (mirror.style.backgroundPosition = `${percentMouseByW}% ${percentMouseByH}%`), (mirror.style.top = `${e.clientY}px`), (mirror.style.left = `${e.clientX}px`);
             });
         }
     }
 
-    handleChangeActive = function (index) {
-        if (config.pagination.visible.display) {
-            slider.querySelectorAll('.pagination-item').forEach((pi) => {
-                pi.classList.remove('active');
-                if (pi.id == index) pi.classList.add('active');
-            });
-            paginationItem.forEach((e) => {
-                if (e.classList.contains('active')) {
-                    e.style.opacity = `1`;
-                    config.pagination.visible.img ? (e.style.border = `2px solid #2879f9`) : (e.style.border = `1px solid black`);
-                } else {
-                    e.style.opacity = `0.5`;
-                    e.style.border = `1px solid black`;
-                }
-            });
-        }
-    };
-
-    handleScrollById = function (index) {
-        handleChangeActive(index);
+    this.handleScrollById = function (index) {
+        if (config.pagination.visible.display) this.handleChangeActive(index);
         currentIndex = index;
         var scrollTo = index * width;
         if (config.slidesPerView == 2) {
@@ -312,50 +299,50 @@ function Slider(selector, config) {
     } else {
         if (config.autoplay.enable && config.slidesPerView < slideCount && config.autoplay.progress.display) {
             var progressValue = config.autoplay.delay;
-            progress.style = `background:conic-gradient(#2879f9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg);background-color: #2879f9; border-radius: 50%; width:${(wrapper.offsetWidth * 5) / 100}px; height:${(wrapper.offsetWidth * 5) / 100}px; position: relative; bottom: ${
-                (wrapper.offsetWidth * 5) / 100
-            }px; left: calc(${wrapper.offsetWidth}px - ${(wrapper.offsetWidth * 5) / 100}px);`;
+            progress.style = `background:conic-gradient(#2879f9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg);background-color:#2879f9;border-radius:50%;width:${(wrapper.offsetWidth * 5) / 100}px;height:${(wrapper.offsetWidth * 5) / 100}px;position:absolute;top:calc(${
+                wrapper.offsetHeight
+            }px - ${(wrapper.offsetWidth * 5) / 100}px);right:0`;
             var value = document.createElement('div');
-            value.style = `background-color: #fff; border-radius: 50%; width:${(wrapper.offsetWidth * 4) / 100}px; height:${(wrapper.offsetWidth * 4) / 100}px; position: absolute; top: calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px); left: calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px)`;
+            value.style = `background-color:#fff;border-radius:50%;width:${(wrapper.offsetWidth * 4) / 100}px;height:${(wrapper.offsetWidth * 4) / 100}px;position:absolute;top:calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px);left:calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px)`;
             progress.appendChild(value);
             var progressValueElement = document.createElement('div');
-            progressValueElement.style = `text-align:center;line-height:${(wrapper.offsetWidth * 4) / 100}px;font-size:24px;font-weight:600;color:#2879f9;`;
+            progressValueElement.style = `text-align:center;line-height:${(wrapper.offsetWidth * 4) / 100}px;font-size:${(wrapper.offsetWidth * 4) / 100}px;font-weight:600;color:#2879f9;`;
             value.appendChild(progressValueElement);
             progressValueElement.innerText = progressValue;
-            progressValueElement.textContent = `${progressValue}s`;
+            progressValueElement.textContent = `${progressValue}`;
             progressId = setInterval(() => {
                 progressValue -= 0.01;
-                progressValueElement.textContent = `${parseInt(progressValue)}s`;
+                progressValueElement.textContent = `${parseInt(progressValue)}`;
                 progress.style.background = `conic-gradient(#2879f9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg)`;
 
-                progressValue == 1 ? (progressValue = config.autoplay.delay + 1) : '';
+                if (progressValue == 1) progressValue = config.autoplay.delay + 1;
             }, 10);
             // Bắt sự kiện khi onScroll thì xóa interval
             const onScroll = () => {
                 progressValue = config.autoplay.delay;
-                progressValueElement.textContent = `${progressValue}s`;
+                progressValueElement.textContent = `${progressValue}`;
                 progress.style.background = `conic-gradient(#2879f9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg)`;
                 clearInterval(autoplayId);
                 clearInterval(progressId);
             };
 
             const onScrollStop = () => {
-                progressValueElement.textContent = `${progressValue}s`;
+                progressValueElement.textContent = `${progressValue}`;
                 progressId = setInterval(() => {
                     progressValue -= 0.01;
-                    progressValueElement.textContent = `${parseInt(progressValue)}s`;
+                    progressValueElement.textContent = `${parseInt(progressValue)}`;
                     progress.style.background = `conic-gradient(#2879f9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg)`;
 
-                    progressValue == 1 ? (progressValue = config.autoplay.delay + 1) : '';
+                    if (progressValue == 1) progressValue = config.autoplay.delay + 1;
                 }, 10);
                 autoplayId = setInterval(
                     () => {
                         if (config.slidesPerView > 1) {
-                            currentIndex == slideCount - config.slidesPerView ? handleScrollById(0) : handleScrollById(++currentIndex);
+                            currentIndex == slideCount - config.slidesPerView ? this.handleScrollById(0) : this.handleScrollById(++currentIndex);
                         } else if (currentIndex == slideCount - 1) {
-                            handleScrollById(0);
+                            this.handleScrollById(0);
                         } else {
-                            handleScrollById(++currentIndex);
+                            this.handleScrollById(++currentIndex);
                         }
                     },
                     config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
@@ -369,20 +356,20 @@ function Slider(selector, config) {
         autoplayId = setInterval(
             () => {
                 if (config.slidesPerView > 1) {
-                    currentIndex == slideCount - config.slidesPerView ? handleScrollById(0) : handleScrollById(++currentIndex);
+                    currentIndex == slideCount - config.slidesPerView ? this.handleScrollById(0) : this.handleScrollById(++currentIndex);
                 } else if (currentIndex == slideCount - 1) {
-                    handleScrollById(0);
+                    this.handleScrollById(0);
                 } else {
-                    handleScrollById(++currentIndex);
+                    this.handleScrollById(++currentIndex);
                 }
             },
             config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
         );
     }
     btnRight.onclick = () => {
-        handleScrollById(++currentIndex);
+        this.handleScrollById(++currentIndex);
     };
     btnLeft.onclick = () => {
-        handleScrollById(--currentIndex);
+        this.handleScrollById(--currentIndex);
     };
 }

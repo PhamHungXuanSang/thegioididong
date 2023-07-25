@@ -146,6 +146,56 @@
                         <button class="add-cart--btn" onclick="handleAddCart()">Thêm vào giỏ hàng</button>
                     </div>
                 </div>
+                <div class="productDetail-main">
+                    <div id="slider">
+                        <div class="wrapperSlide">
+                            <div class="slide" style="display: flex; align-items: center; justify-content: center; background-color: rgb(255, 255, 255); min-width: calc((100% - 80px) / 5); height: 100%">
+                                <img src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg" style="display: block; max-width: 100%; min-height: 100%; object-fit: cover" />
+                            </div>
+                            <div class="slide" style="display: flex; align-items: center; justify-content: center; background-color: rgb(255, 255, 255); min-width: calc((100% - 80px) / 5); height: 100%">
+                                <img src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg" style="display: block; max-width: 100%; min-height: 100%; object-fit: cover" />
+                            </div>
+                            <div class="slide" style="display: flex; align-items: center; justify-content: center; background-color: rgb(255, 255, 255); min-width: calc((100% - 80px) / 5); height: 100%">
+                                <img src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg" style="display: block; max-width: 100%; min-height: 100%; object-fit: cover" />
+                            </div>
+                            <div class="slide" style="display: flex; align-items: center; justify-content: center; background-color: rgb(255, 255, 255); min-width: calc((100% - 80px) / 5); height: 100%">
+                                <img src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg" style="display: block; max-width: 100%; min-height: 100%; object-fit: cover" />
+                            </div>
+                            <div class="slide" style="display: flex; align-items: center; justify-content: center; background-color: rgb(255, 255, 255); min-width: calc((100% - 80px) / 5); height: 100%">
+                                <img src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg" style="display: block; max-width: 100%; min-height: 100%; object-fit: cover" />
+                            </div>
+                            <div class="slide" style="display: flex; align-items: center; justify-content: center; background-color: rgb(255, 255, 255); min-width: calc((100% - 80px) / 5); height: 100%">
+                                <img src="https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-den-thumb-200x200.jpg" style="display: block; max-width: 100%; min-height: 100%; object-fit: cover" />
+                            </div>
+                        </div>
+                        <div class="wrapperPagination">
+                            
+                        </div>
+                        <div class="progress"></div>
+
+                        <button class="prev">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button class="next">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                        <div class="mirror"></div>
+                    </div>
+                    <div class="info">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, ea voluptas expedita quis recusandae possimus suscipit facere, aperiam nostrum non saepe quaerat sit harum? Debitis laudantium fugiat similique asperiores voluptatum!</p>
+                        <div class="quantity__wrapper">
+                            <button class="minus" onclick="handleQuantityMinus()">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <div class="quantity">1</div>
+                            <button class="plus" onclick="handleQuantityPlus()">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <button class="add-cart--btn" onclick="handleAddCart()">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
             </section>
             <!-- Toast Message-->
             <div id="toast"></div>
@@ -154,15 +204,50 @@
     <script src="./product-detail.js"></script>
     <script src="./slider.js"></script>
     <script>
-        Slider('#sliderLibrary', {
+        new Slider('#sliderLibrary', {
             width: 800,
             height: 400,
+            slidesPerView: 3, // from 1 to 5
+            spaceBetween: 20, // from 5 pixel
+            draggable: true,
+            autoplay: {
+                enable: true,
+                // disableOnInteraction: false, //FIX
+                delay: 3, // from 1 second
+                progress: {
+                    element: '.progress',
+                    display: true,
+                },
+            },
+            zoomable: {
+                // Zoomable in-case slidesPerView=1 && autoplay.enable=false && draggable=false
+                element: '.mirror',
+                display: true,
+            },
+            wrapperSlide: '.wrapperSlide',
+            pagination: {
+                element: '.wrapperPagination',
+                visible: {
+                    display: true,
+                    img: true,
+                },
+                clickable: true,
+            },
+            navigation: {
+                left: '.prev',
+                right: '.next',
+            },
+        });
+
+        new Slider('#slider', {
+            width: 600,
+            height: 300,
             slidesPerView: 2, // from 1 to 5
             spaceBetween: 20, // from 5 pixel
             draggable: true,
             autoplay: {
                 enable: true,
-                disableOnInteraction: false, //FIX
+                // disableOnInteraction: false, //FIX
                 delay: 3, // from 1 second
                 progress: {
                     element: '.progress',

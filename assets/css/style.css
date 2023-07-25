@@ -547,7 +547,7 @@
 }
 
 .product-item:hover .product-item__img {
-    animation: slideTop 0.5s;
+    animation: slideTop 0.5s forwards;
 }
 
 .product-item__img {
