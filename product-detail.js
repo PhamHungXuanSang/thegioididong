@@ -2,7 +2,7 @@ import { Phone } from './Data.js';
 // Handle header cart number display
 var CartLocal = JSON.parse(localStorage.getItem('CartData'));
 var totalProducts = 0;
-if (CartLocal.length > 0) {
+if (CartLocal.length != null && CartLocal.length > 0) {
     CartLocal.forEach((cart) => {
         totalProducts += cart.quantity;
     });
