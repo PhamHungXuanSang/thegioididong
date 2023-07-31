@@ -141,6 +141,34 @@ function toast({ title = '', message = '', type = '', duration = 3000 }) {
     main.appendChild(toast);
 }
 
+function search() {
+    setTimeout(() => {
+        const searchValue = inputSearch.value.toUpperCase();
+        const filterData = Phone.filter((item) => {
+            return item.name.toUpperCase().includes(searchValue);
+        });
+        if (inputSearch.value.length == 0) {
+            searchResult.style.display = 'none';
+        } else if (filterData.length == 0 && inputSearch.value.length > 0) {
+            searchResult.style.display = 'block';
+            searchResult.innerHTML = '<div style="width:300px;text-align:center;color:gray;font-style:italic;font-size:12px;">Không tìm thấy sản phẩm nào</div>';
+        } else {
+            searchResult.style.display = 'block';
+            searchResult.innerHTML = filterData
+                .map((item) => {
+                    return `<a href="./product-detail.html" class="result-item" onclick="pushPhone(${item.id})">
+                <img src="${item.color[0][1]}" alt="Ảnh" class="result-item-img" />
+                <div class="result-item-info">
+                    <div class="result-item-name">${item.name}</div>
+                    <div class="result-item-price">${item.newPrice.toLocaleString() + ' đ'}</div>
+                </div>
+            </a>`;
+                })
+                .join('');
+        }
+    }, 500);
+}
+
 // handle add cart
 window.handleAddCart = function () {
     var isAdded = false;
