@@ -16,7 +16,7 @@ const render = (Cart) => {
     } else {
         document.querySelector('.customer').style.display = 'block';
         const cart = `<div class="cart__nav">
-                    <a href="/index.html" class="cart__backhome"
+                    <a href="index.html" class="cart__backhome"
                         ><i class="fa-solid fa-chevron-left"></i>Mua thêm sản phẩm khác</a
                     >
                     <p class="cart__nav-title">Giỏ hàng của anh</p>
