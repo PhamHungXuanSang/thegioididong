@@ -1,5 +1,5 @@
 // ================ Code Library ================
-function Slider(selector, config) {
+export default function Slider(selector = '#sliderLibrary', config) {
     config = {
         width: config.width ? config.width : 800,
         height: config.height ? config.height : 400,
@@ -33,15 +33,15 @@ function Slider(selector, config) {
         },
     };
 
-    var currentIndex = 0,
+    let currentIndex = 0,
         progressId,
         autoplayId,
-        slider = document.querySelector(`${selector}`),
-        wrapper = slider.querySelector(config.wrapperSlide); // img-slideShow
+        slider = document.querySelector(`${selector}`);
     if (!slider) {
         console.log(`Not find ${selector} selector`);
         return;
     }
+    let wrapper = slider.querySelector(config.wrapperSlide); // img-slideShow
     if (!wrapper) {
         console.log(`Not find ${config.wrapperSlide} selector`);
         return;
@@ -49,43 +49,51 @@ function Slider(selector, config) {
     wrapper.style = `width:${config.width}px;height:${config.height}px;display:flex;align-items:center;text-align:center;`;
     slider.style = `width:${config.width}px;height:calc(${config.height}px + ${wrapper.offsetHeight / 10 + 8}px);overflow:hidden;position:relative;`;
 
-    var btnLeft = slider.querySelector(config.navigation.left);
+    let btnLeft = slider.querySelector(config.navigation.left);
     if (!btnLeft) {
         console.log(`Not find ${config.navigation.left} selector`);
         return;
     }
     btnLeft.style = `cursor:pointer;position:absolute;top:calc(100% / 2 - (30px + ${
         wrapper.offsetHeight / 10 / 2
-    }px));width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;color:#2879f9;opacity:0.6;border-top-right-radius:6px;border-bottom-right-radius:6px;box-shadow:6px 0 4px rgba(0, 0, 0, 0.3);`;
+    }px));width:30px;height:60px;z-index:2;display:none;border:none;background-color:#fcfdf9;color:#2879f9;opacity:0.6;border-top-right-radius:6px;border-bottom-right-radius:6px;box-shadow:6px 0 4px rgba(0, 0, 0, 0.3);`;
     btnLeft.addEventListener('mouseenter', () => {
-        (btnLeft.style.opacity = '1'), (btnLeft.style.transitionDuration = '200ms'), (btnLeft.style.transform = 'scale(1.05)');
+        btnLeft.style.opacity = '1';
+        btnLeft.style.transitionDuration = '200ms';
+        btnLeft.style.transform = 'scale(1.05)';
     });
     btnLeft.addEventListener('mouseleave', () => {
-        (btnLeft.style.opacity = '0.6'), (btnLeft.style.transitionDuration = '200ms'), (btnLeft.style.transform = 'scale(1)');
+        btnLeft.style.opacity = '0.6';
+        btnLeft.style.transitionDuration = '200ms';
+        btnLeft.style.transform = 'scale(1)';
     });
 
-    var btnRight = slider.querySelector(config.navigation.right);
+    let btnRight = slider.querySelector(config.navigation.right);
     if (!btnRight) {
         console.log(`Not find ${config.navigation.right} selector`);
         return;
     }
     btnRight.style = `cursor:pointer;position:absolute;left:0;top:calc(100% / 2 - (30px + ${
         wrapper.offsetHeight / 10 / 2
-    }px));left:calc(100% - 30px);width:30px;height:60px;z-index:10;display:none;border:none;background-color:#fcfdf9;color:#2879f9;opacity:0.6;border-top-left-radius:6px;border-bottom-left-radius:6px;box-shadow:-6px 0 4px rgba(0, 0, 0, 0.5);`;
+    }px));left:calc(100% - 30px);width:30px;height:60px;z-index:2;display:none;border:none;background-color:#fcfdf9;color:#2879f9;opacity:0.6;border-top-left-radius:6px;border-bottom-left-radius:6px;box-shadow:-6px 0 4px rgba(0, 0, 0, 0.5);`;
     btnRight.addEventListener('mouseenter', () => {
-        (btnRight.style.opacity = '1'), (btnRight.style.transitionDuration = '200ms'), (btnRight.style.transform = 'scale(1.05)');
+        btnRight.style.opacity = '1';
+        btnRight.style.transitionDuration = '200ms';
+        btnRight.style.transform = 'scale(1.05)';
     });
     btnRight.addEventListener('mouseleave', () => {
-        (btnRight.style.opacity = '0.6'), (btnRight.style.transitionDuration = '200ms'), (btnRight.style.transform = 'scale(1)');
+        btnRight.style.opacity = '0.6';
+        btnRight.style.transitionDuration = '200ms';
+        btnRight.style.transform = 'scale(1)';
     });
 
-    var width = config.slidesPerView > 1 ? config.width / config.slidesPerView - config.spaceBetween : config.width / config.slidesPerView; // slide width
+    let width = config.slidesPerView > 1 ? config.width / config.slidesPerView - config.spaceBetween : config.width / config.slidesPerView; // slide width
 
     const list = [...wrapper.children]; // Spread HTMLCollection vào mảng
-    var slideCount = list.length; // Tổng số slide
+    let slideCount = list.length; // Tổng số slide
     if (slideCount > 1 && config.slidesPerView < slideCount) btnRight.style.display = 'block';
     // Lặp qua và css cho từng phần tử
-    var imgWidthArr = [],
+    let imgWidthArr = [],
         imgElementArr = [];
     list.forEach((item, index) => {
         item.classList.add(index);
@@ -144,7 +152,7 @@ function Slider(selector, config) {
             });
         }
 
-        for (var img of item.children) {
+        for (let img of item.children) {
             img.style = `display:block;max-width:100%;height:100%;object-fit:cover`;
             imgElementArr.push(img); // push vào mảng để lưu lại DOM Element của mỗi ảnh
             imgWidthArr.push(img.offsetWidth); // push vào mảng để lưu lại giá trị chiều rộng của mỗi ảnh
@@ -153,7 +161,7 @@ function Slider(selector, config) {
 
     // render pagination
     if (config.pagination.visible.display) {
-        var paginationElement = slider.querySelector(`${config.pagination.element}`); // img-preview
+        let paginationElement = slider.querySelector(`${config.pagination.element}`); // img-preview
         if (!paginationElement) {
             console.log(`Not find ${config.pagination.element} selector`);
             return;
@@ -169,7 +177,8 @@ function Slider(selector, config) {
                     e.style.opacity = `1`;
                     config.pagination.visible.img ? (e.style.border = `2px solid #2879f9`) : (e.style.border = `1px solid black`);
                 } else {
-                    (e.style.opacity = `0.5`), (e.style.border = `1px solid black`);
+                    e.style.opacity = `0.5`;
+                    e.style.border = `1px solid black`;
                 }
             });
         };
@@ -179,33 +188,27 @@ function Slider(selector, config) {
                     return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}" ${
                         config.slidesPerView == 1 ? `click="${index}"></div>` : index >= slideCount - config.slidesPerView ? `click="${slideCount - config.slidesPerView}|${index}"></div>` : `click="${index}"></div>`
                     }</div>`;
-                } else {
-                    return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}"></div>`;
-                }
+                } else return `<div id="${index}" class="pagination-item ${index == 0 ? 'active' : ''}"></div>`;
                 // Nếu có clickable thì có onclick không thì `` cả hai trường hợp đếu cần xử lý đổi active khi chuyển slide.
                 // Với trường hợp có onclick thì cần chia ra khi slidesPerView == 1 handle(index), khi slidesPerView lớn hơn 1 && index >= slideCount-slidesPerView thì handle(slideCount-slidesPerView)
             })
             .join('');
 
-        var paginationItem = [...paginationElement.children];
+        let paginationItem = [...paginationElement.children];
         paginationItem.forEach((it, index) => {
             if (it.getAttribute('click')) {
                 it.addEventListener('click', () => {
                     if (it.getAttribute('click').split('|').length > 1) {
                         this.handleScrollById(it.getAttribute('click').split('|')[0]);
                         this.handleChangeActive(it.getAttribute('click').split('|')[1]);
-                    } else {
-                        this.handleScrollById(it.getAttribute('click'));
-                    }
+                    } else this.handleScrollById(it.getAttribute('click'));
                 });
             }
             if (config.pagination.visible.img) {
                 it.style = `min-width:${wrapper.offsetHeight / 10}px;height:${wrapper.offsetHeight / 10}px;background-image:url('${imgElementArr[index].src}');background-repeat:no-repeat;background-size:100% 100%;border:${index == 0 ? '2px' : '1px'} solid ${
                     index == 0 ? '#2879f9' : 'black'
                 };opacity:0.5;border-radius:1px;margin:0 4px;${config.pagination.clickable ? 'cursor:pointer;' : ''}`;
-            } else {
-                it.style = `width:16px;height:16px;background-color:#2879f9;border:1px solid black;opacity:0.5;border-radius:50%;margin:0 4px;${config.pagination.clickable ? 'cursor:pointer;' : ''}`;
-            }
+            } else it.style = `width:16px;height:16px;background-color:#2879f9;border:1px solid black;opacity:0.5;border-radius:50%;margin:0 4px;${config.pagination.clickable ? 'cursor:pointer;' : ''}`;
             if (index == 0) it.style.opacity = '1';
         });
     }
@@ -243,7 +246,7 @@ function Slider(selector, config) {
         wrapper.addEventListener('mouseup', dragStop);
     }
     if (config.autoplay.enable == false && config.draggable == false && config.zoomable.display && config.slidesPerView == 1 && config.zoomable.element) {
-        var mirror = slider.querySelector(`${config.zoomable.element}`);
+        let mirror = slider.querySelector(`${config.zoomable.element}`);
         if (!mirror) {
             console.log(`Not find ${config.zoomable.element} selector`);
         } else {
@@ -269,7 +272,9 @@ function Slider(selector, config) {
                 let percentMouseByW = Math.floor((mouseWithImgBorderX / imgWidthArr[currentIndex]) * 100),
                     percentMouseByH = Math.floor((mouseWithImgBorderY / heightSlide) * 100);
 
-                (mirror.style.backgroundPosition = `${percentMouseByW}% ${percentMouseByH}%`), (mirror.style.top = `${e.clientY}px`), (mirror.style.left = `${e.clientX}px`);
+                mirror.style.backgroundPosition = `${percentMouseByW}% ${percentMouseByH}%`;
+                mirror.style.top = `${e.clientY}px`;
+                mirror.style.left = `${e.clientX}px`;
             });
         }
     }
@@ -277,7 +282,6 @@ function Slider(selector, config) {
     this.handleScrollById = function (index) {
         if (config.pagination.visible.display) this.handleChangeActive(index);
         currentIndex = index;
-        var scrollTo = index * width;
         if (config.slidesPerView == 2) {
             list.forEach((item, itemIndex) => {
                 currentIndex == itemIndex ? item.classList.add('active') : item.classList.remove('active');
@@ -288,35 +292,31 @@ function Slider(selector, config) {
         }
 
         if ((config.slidesPerView == 1 && config.slidesPerView < slideCount) || (config.slidesPerView == 2 && config.slidesPerView < slideCount)) {
-            wrapper.style.transform = `translateX(${-1 * scrollTo - index * config.spaceBetween}px)`;
+            wrapper.style.transform = `translateX(${-1 * index * width - index * config.spaceBetween}px)`;
         } else if (config.slidesPerView > 2 && config.slidesPerView < slideCount) {
             wrapper.style.transform = `translateX(${(-index * (wrapper.offsetWidth - config.spaceBetween * (config.slidesPerView - 1))) / config.slidesPerView}px)`;
-        } else {
-            console.log('slidesPerView > slideCount');
-        }
+        } else console.log('slidesPerView > slideCount');
         wrapper.style.transitionDuration = '0.6s';
 
         index > 0 ? (btnLeft.style.display = 'block') : (btnLeft.style.display = 'none');
         index == slideCount - 1 ? (btnRight.style.display = 'none') : (btnRight.style.display = 'block');
 
-        if (config.slidesPerView > 1) {
-            currentIndex == slideCount - config.slidesPerView ? (btnRight.style.display = 'none') : (btnRight.style.display = 'block');
-        }
+        if (config.slidesPerView > 1) currentIndex == slideCount - config.slidesPerView ? (btnRight.style.display = 'none') : (btnRight.style.display = 'block');
     };
 
-    var progress = slider.querySelector(`${config.autoplay.progress.element}`);
+    let progress = slider.querySelector(`${config.autoplay.progress.element}`);
     if (!progress) {
         console.log(`Not find ${config.autoplay.progress.element} selector`);
     } else {
         if (config.autoplay.enable && config.slidesPerView < slideCount && config.autoplay.progress.display) {
-            var progressValue = config.autoplay.delay;
+            let progressValue = config.autoplay.delay;
             progress.style = `background:conic-gradient(#2879f9 ${(progressValue * 360) / config.autoplay.delay}deg,#cadcff 0deg);background-color:#2879f9;border-radius:50%;width:${(wrapper.offsetWidth * 5) / 100}px;height:${(wrapper.offsetWidth * 5) / 100}px;position:absolute;top:calc(${
                 wrapper.offsetHeight
             }px - ${(wrapper.offsetWidth * 5) / 100}px);right:0`;
-            var value = document.createElement('div');
+            let value = document.createElement('div');
             value.style = `background-color:#fff;border-radius:50%;width:${(wrapper.offsetWidth * 4) / 100}px;height:${(wrapper.offsetWidth * 4) / 100}px;position:absolute;top:calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px);left:calc(50% - ${(wrapper.offsetWidth * 4) / 100 / 2}px)`;
             progress.appendChild(value);
-            var progressValueElement = document.createElement('div');
+            let progressValueElement = document.createElement('div');
             progressValueElement.style = `text-align:center;line-height:${(wrapper.offsetWidth * 4) / 100}px;font-size:${(wrapper.offsetWidth * 4) / 100}px;font-weight:600;color:#2879f9;`;
             value.appendChild(progressValueElement);
             progressValueElement.innerText = progressValue;
@@ -352,9 +352,7 @@ function Slider(selector, config) {
                             currentIndex == slideCount - config.slidesPerView ? this.handleScrollById(0) : this.handleScrollById(++currentIndex);
                         } else if (currentIndex == slideCount - 1) {
                             this.handleScrollById(0);
-                        } else {
-                            this.handleScrollById(++currentIndex);
-                        }
+                        } else this.handleScrollById(++currentIndex);
                     },
                     config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
                 );
@@ -370,9 +368,7 @@ function Slider(selector, config) {
                     currentIndex == slideCount - config.slidesPerView ? this.handleScrollById(0) : this.handleScrollById(++currentIndex);
                 } else if (currentIndex == slideCount - 1) {
                     this.handleScrollById(0);
-                } else {
-                    this.handleScrollById(++currentIndex);
-                }
+                } else this.handleScrollById(++currentIndex);
             },
             config.autoplay.delay < 1000 ? config.autoplay.delay * 1000 : config.autoplay.delay,
         );

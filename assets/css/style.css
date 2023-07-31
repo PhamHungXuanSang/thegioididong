@@ -375,36 +375,6 @@
     margin-bottom: 4px;
 }
 
-.deal__btn-left {
-    width: 28px;
-    height: 56px;
-    border: none;
-    border-radius: 4px;
-    opacity: 0.8;
-    position: absolute;
-    left: 0;
-}
-
-.deal__btn-left:hover {
-    opacity: 0.5;
-    cursor: pointer;
-}
-
-.deal__btn-right {
-    width: 28px;
-    height: 56px;
-    border: none;
-    border-radius: 4px;
-    opacity: 0.8;
-    position: absolute;
-    right: 0;
-}
-
-.deal__btn-right:hover {
-    opacity: 0.5;
-    cursor: pointer;
-}
-
 .deal__header-icon {
     width: 32px;
     height: 70px;
@@ -525,7 +495,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 180px;
+    width: 183.3px;
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
@@ -572,24 +542,6 @@
 .product-item--oldprice {
     opacity: 0.6;
     font-size: 14px;
-}
-
-.deal__seeAll {
-    margin: 0 auto;
-    display: block;
-    padding: 12px 88px;
-    border: none;
-    border-radius: 4px;
-}
-
-.deal__seeAll:hover {
-    cursor: pointer;
-}
-
-.deal__seeAll-icon {
-    margin-left: 4px;
-    font-size: 12px;
-    opacity: 0.8;
 }
 
 .cart--empty {
@@ -909,6 +861,7 @@
 }
 
 .customer {
+    display: none;
     width: 600px;
     margin: 0 auto;
     background-color: #f3f3f3;
@@ -1060,4 +1013,59 @@ input:checked ~ .checkmark:after {
 
 .form-submit:hover {
     background-color: #f06c2c;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.bill {
+    padding: 16px 16px;
+    width: 400px;
+    background-color: #fff;
+    position: fixed;
+    top: calc(50% - 200px);
+    left: calc(50% - 200px);
+    border-radius: 8px;
+    animation: modalFadeIn ease 0.3s;
+}
+
+.bill-shop-name,
+.bill-shop-label {
+    text-align: center;
+    padding: 12px;
+}
+
+.bill-shop-info {
+    padding: 8px 0;
+}
+
+.bill-confirm {
+    border: 1px solid #ddd;
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #2f98fa;
+    color: #fff;
+}
+
+.bill-confirm:hover {
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.5s;
+    transform: scale(1.05);
+}
+
+@keyframes modalFadeIn {
+    from {
+        transform: translateY(-200px);
+    }
+    to {
+        transform: translateY(0px);
+    }
 }

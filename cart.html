@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Thế Giới Laptop</title>
+        <title>Shop Điện Thoại</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
         <link rel="stylesheet" href="./assets/css/base.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
@@ -148,13 +148,20 @@
                             <span class="form-message"></span>
                         </div>
                     </div>
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="address" class="form-label"></label>
+                            <input maxlength="10" id="address" name="address" rules="required" class="form-control" type="text" placeholder="Địa chỉ" />
+                            <span class="form-message"></span>
+                        </div>
+                    </div>
                     <button class="form-submit">Mua hàng</button>
                 </form>
             </div>
+            <section style="position: fixed; bottom: 0; margin-top: 32px; width: 100vw; height: 32px; background-color: #eee"><p style="text-align: center; line-height: 32px">Copyright2023@PhamHungXuanSang,LeQuangPhuoc</p></section>
         </div>
     </body>
     <script type="module" src="./cart.js"></script>
-    <!-- <script type="module" src="./Data.js"></script> -->
     <script src="./validator.js"></script>
     <script>
         var form = new Validator('#form-1');
@@ -175,7 +182,44 @@
                 phoneInfo['intoMoney'] = cI.quantity * cI.newPrice;
                 data['purchaseinfor'].push(phoneInfo);
             });
-            console.log(data);
+            // console.log(data);
+            let sum = 0;
+            let overlay = document.createElement('div');
+            overlay.classList.add('overlay');
+            // overlay.style = 'position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.4);';
+            overlay.innerHTML = `<div class='bill'>
+                    <h2 class='bill-shop-name'>Shop Điện Thoại</h2>
+                    <h3 style='text-align:center;margin:16px 0;color:#ccc;'>Cảm ơn Quý khách!</h3>
+                    <h4 class='bill-shop-label'>Hoá đơn thanh toán</h4>
+                    <p class='bill-shop-info'>Ngày mua hàng: ${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}</p>
+                    <p class='bill-shop-info'>${data.gender == 'Nam' ? 'Anh: ' : 'Chị: '}${data.fullname}</p>
+                    <p class='bill-shop-info'>${data.phonenumber ? 'Số điện thoại: ' : ''}${data.phonenumber}</p>
+                    <p class='bill-shop-info'>${data.address ? 'Địa chỉ: ' : ''}${data.address}</p>
+                    <table style='border: 1px solid #ddd;width:100%;'>
+                        <tr style='border: 1px solid #ddd;'>
+                            <th style='border: 1px solid #ddd;'>STT</th>
+                            <th style='border: 1px solid #ddd;'>Tên Hàng</th>
+                            <th style='border: 1px solid #ddd;'>Đơn Giá</th>
+                            <th style='border: 1px solid #ddd;'>Số Lượng</th>
+                            <th style='border: 1px solid #ddd;'>Thành Tiền</th>
+                        </tr>
+                        ${data.purchaseinfor
+                            .map((phone, index) => {
+                                sum += phone.intoMoney;
+                                return `<tr style='border: 1px solid #ddd;'>
+                                    <th style='border: 1px solid #ddd;'>${index + 1}</th>
+                                    <th style='border: 1px solid #ddd;'>${phone.name}</th>
+                                    <th style='border: 1px solid #ddd;'>${phone.price.toLocaleString()}</th>
+                                    <th style='border: 1px solid #ddd;'>${phone.quantity}</th>
+                                    <th style='border: 1px solid #ddd;'>${phone.intoMoney.toLocaleString()}</th>
+                                </tr>`;
+                            })
+                            .join('')}
+                    </table>
+                        <h3 style='margin-top:8px;text-align:right;margin:16px 0;'>Tổng tiền: ${sum.toLocaleString()} đ</h3>
+                    <div style='text-align:right;'><button class="bill-confirm" onclick="closeForm()">Xác Nhận</button></div>
+                </div>`;
+            document.querySelector('body').appendChild(overlay);
         };
     </script>
 </html>

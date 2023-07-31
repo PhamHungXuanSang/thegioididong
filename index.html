@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Thế Giới Di Động</title>
+        <title>Shop Điện Thoại</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
         <link rel="stylesheet" href="./assets/css/base.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
@@ -119,42 +119,54 @@
             <section class="banner">
                 <img class="banner__img" alt="Ảnh banner" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/Big-desk-1920x450-6.jpg" />
             </section>
-            <section class="slider">
-                <button class="slider__btn-left"><i class="slider__icon-left fa-solid fa-chevron-left"></i></button>
-                <div class="boc">
-                    <div class="images--slider">
-                        <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/MVW-Glory-720-220-720x220-1.png" alt="Ảnh slider" class="image--slider" /><img
+            <section class="slider" style="border-radius: 16px;overflow: hidden;">
+                <div id="sliderLibrary">
+                    <div class="wrapperSlide">
+                        <div class="slide"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/MVW-Glory-720-220-720x220-1.png" alt="Ảnh slider" class="image--slider" /></div>
+                        <div class="slide"><img
                             src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/05/banner/a57-720-220-720x220-7.png"
                             alt="Ảnh slider"
                             class="image--slider"
-                        />
-                    </div>
-                    <div class="images--slider">
-                        <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/S21FE-720-220-720x220-3.png" alt="Ảnh slider" class="image--slider" /><img
+                        /></div>
+                        <div class="slide"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/S21FE-720-220-720x220-3.png" alt="Ảnh slider" class="image--slider" /></img></div>
+                        <div class="slide"><img
                             src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/LTMS-720-220-720x220-2.png"
                             alt="Ảnh slider"
                             class="image--slider"
-                        />
-                    </div>
-                    <div class="images--slider">
-                        <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/iP-14-720-220-720x220-1.png" alt="Ảnh slider" class="image--slider" /><img
+                        /></div>
+                        <div class="slide"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/iP-14-720-220-720x220-1.png" alt="Ảnh slider" class="image--slider" /></div>
+                        <div class="slide"><img
                             src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/y36-720-220-720x220-2.png"
                             alt="Ảnh slider"
                             class="image--slider"
-                        />
-                    </div>
-                    <div class="images--slider">
-                        <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/720-220-720x220-83.png" alt="Ảnh slider" class="image--slider" /><img
+                        /></div>
+                        <div class="slide"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/iP-14-720-220-720x220-1.png" alt="Ảnh slider" class="image--slider" /></div>
+                        <div class="slide"><img
+                            src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/y36-720-220-720x220-2.png"
+                            alt="Ảnh slider"
+                            class="image--slider"
+                        /></div>
+                        <div class="slide"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/04/banner/720-220-720x220-83.png" alt="Ảnh slider" class="image--slider" /></div>
+                        <div class="slide"><img
                             src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/06/banner/Befit-720-220-720x220-1.png"
                             alt="Ảnh slider"
                             class="image--slider"
-                        />
+                        /></div>
                     </div>
+                    <div class="wrapperPagination"></div>
+                    <div class="progress"></div>
+    
+                    <button class="prev">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button class="next">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+    
+                    <div class="mirror"></div>
                 </div>
-                <button class="slider__btn-right"><i class="slider__icon-right fa-solid fa-chevron-right"></i></button>
             </section>
             <section class="deal">
-                <button class="deal__btn-left"><i class="deal__btn-left-icon fa-solid fa-chevron-left"></i></button>
                 <div class="deal__content">
                     <div class="deal__header">
                         <img src="https://cdn.tgdd.vn/mwgcart/mwgcore/ContentMwg/images/homev2/lightning-ic.png" alt="icon" class="deal__header-icon" />
@@ -176,11 +188,46 @@
                         </div>
                     </div>
                     <div class="deal__products"></div>
-                    <button class="deal__seeAll"><span>Xem tất cả</span><i class="deal__seeAll-icon fa-solid fa-chevron-right"></i></button>
                 </div>
-                <button class="deal__btn-right"><i class="deal__btn-right-icon fa-solid fa-chevron-right"></i></button>
             </section>
+            <section style="margin-top: 32px; width: 100vw; height: 32px; background-color: #eee"><p style="text-align: center; line-height: 32px">Copyright2023@PhamHungXuanSang,LeQuangPhuoc</p></section>
         </div>
     </body>
     <script type="module" src="./index.js"></script>
+    <script type="module">
+        import Slider from './slider.js';
+        new Slider('#sliderLibrary', {
+            width: 1200,
+            height: 180,
+            slidesPerView: 2, // from 1 to 5
+            spaceBetween: 20, // from 5 pixel
+            draggable: true,
+            autoplay: {
+                enable: true,
+                delay: 3, // from 1 second
+                progress: {
+                    element: '.progress',
+                    display: false,
+                },
+            },
+            zoomable: {
+                // Zoomable in-case slidesPerView=1 && autoplay.enable=false && draggable=false
+                element: '.mirror',
+                display: false,
+            },
+            wrapperSlide: '.wrapperSlide',
+            pagination: {
+                element: '.wrapperPagination',
+                visible: {
+                    display: false,
+                    img: true,
+                },
+                clickable: true,
+            },
+            navigation: {
+                left: '.prev',
+                right: '.next',
+            },
+        });
+    </script>
 </html>

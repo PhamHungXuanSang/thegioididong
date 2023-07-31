@@ -1,5 +1,3 @@
-import { Cart } from './Data.js';
-
 const render = (Cart) => {
     var totalProducts = 0;
     var totalPrice = 0;
@@ -14,8 +12,9 @@ const render = (Cart) => {
         document.querySelector('.cart').style.display = 'none';
         document.querySelector('.header__top-cart-number').style.display = 'none';
         document.querySelector('.cart--empty').style.display = 'block';
-    }
-    const cart = `<div class="cart__nav">
+    } else {
+        document.querySelector('.customer').style.display = 'block';
+        const cart = `<div class="cart__nav">
                     <a href="/index.html" class="cart__backhome"
                         ><i class="fa-solid fa-chevron-left"></i>Mua thêm sản phẩm khác</a
                     >
@@ -66,7 +65,8 @@ const render = (Cart) => {
                     </div>
                 </div>
             `;
-    document.querySelector('.cart').innerHTML = cart;
+        document.querySelector('.cart').innerHTML = cart;
+    }
 };
 
 window.handleDelete = function (index) {
@@ -95,7 +95,7 @@ window.handleIncrease = function (index) {
         render(CartLocal);
     }
 };
-var CartLocal = JSON.parse(localStorage.getItem('CartData'));
+var CartLocal = JSON.parse(localStorage.getItem('CartData')) != null ? JSON.parse(localStorage.getItem('CartData')) : [];
 
 // customer info
 window.handleChecked = function (id) {
@@ -103,6 +103,11 @@ window.handleChecked = function (id) {
         checkbox.checked = false;
     });
     document.querySelectorAll('.checkbox')[id].checked = true;
+};
+
+window.closeForm = function () {
+    let overlay = document.querySelector('.overlay');
+    document.querySelector('body').removeChild(overlay);
 };
 
 render(CartLocal);

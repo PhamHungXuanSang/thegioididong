@@ -1,58 +1,11 @@
-import { Phone, Cart } from './Data.js';
-
-// Handle image slider
-var scrollFirst = 0;
-var sumImages = document.querySelectorAll('.images--slider').length;
-
-const slideInterval = setInterval(() => {
-    var boc = document.querySelector('.boc');
-    boc.scrollLeft = boc.scrollLeft + 1200;
-    boc.addEventListener('scroll', (e) => {
-        scrollFirst = boc.scrollLeft;
-    });
-}, 3000);
-
-const slideFirstInterval = setInterval(() => {
-    var boc = document.querySelector('.boc');
-    boc.scrollLeft = boc.scrollLeft - scrollFirst;
-}, sumImages * 3000);
-
-document.querySelector('.slider__btn-right').onclick = () => {
-    var boc = document.querySelector('.boc');
-    if (scrollFirst == 1200 * (sumImages - 1)) {
-        boc.scrollLeft = boc.scrollLeft - scrollFirst;
-    } else {
-        boc.scrollLeft = boc.scrollLeft + 1200;
-        boc.addEventListener('scroll', (e) => {
-            scrollFirst = boc.scrollLeft;
-        });
-        clearInterval(slideInterval);
-        clearInterval(slideFirstInterval);
-    }
-};
-
-document.querySelector('.slider__btn-left').onclick = () => {
-    var boc = document.querySelector('.boc');
-    if (scrollFirst == 0) {
-        boc.scrollLeft = boc.scrollLeft + 1200 * sumImages;
-        boc.addEventListener('scroll', (e) => {
-            scrollFirst = boc.scrollLeft;
-        });
-    } else {
-        boc.scrollLeft = boc.scrollLeft - 1200;
-        clearInterval(slideInterval);
-        clearInterval(slideFirstInterval);
-    }
-};
+import { Phone } from './Data.js';
+var CartLocal = JSON.parse(localStorage.getItem('CartData')) != null ? JSON.parse(localStorage.getItem('CartData')) : localStorage.setItem('CartData', JSON.stringify([]));
 
 // Handle header cart number display
-// localStorage.setItem('CartData', JSON.stringify(Cart));
-var CartLocal = JSON.parse(localStorage.getItem('CartData'));
-// Đưa db cart từ trang hiện tại vào, kiểm tra nếu length > 0 thì hiển thị không thì ẩn đi, return về tổng số hàng
 function renderCartNumber(CartLocal) {
     var totalProducts = 0;
     var totalPrice = 0;
-    if (CartLocal.length > 0) {
+    if (CartLocal != null && CartLocal.length != 0) {
         CartLocal.forEach((cart) => {
             totalProducts += cart.quantity;
             totalPrice += cart.quantity * cart.newPrice;
@@ -62,7 +15,7 @@ function renderCartNumber(CartLocal) {
     } else {
         document.querySelector('.header__top-cart-number').style.display = 'none';
     }
-    return { totalProducts, totalPrice };
+    // return { totalProducts, totalPrice };
 }
 
 // Handle countdown timer
@@ -92,11 +45,7 @@ setInterval(() => {
     countdown();
 }, 1000);
 
-// Handle push product-detail
-// Fake data Phone
-localStorage.setItem('Phone', JSON.stringify(Phone));
-var dealPhone = JSON.parse(localStorage.getItem('Phone'));
-const renderDeal = (Phone) => {
+const renderPhone = (Phone) => {
     const phone = Phone.map((phone, index) => {
         return `<a href="./product-detail.html" class="product-item" onclick="pushPhone(${index})">
         <img
@@ -127,7 +76,7 @@ inputSearch.addEventListener('keyup', search);
 function search() {
     setTimeout(() => {
         const searchValue = inputSearch.value.toUpperCase();
-        const filterData = dealPhone.filter((item) => {
+        const filterData = Phone.filter((item) => {
             return item.name.toUpperCase().includes(searchValue);
         });
         if (inputSearch.value.length == 0) {
@@ -149,8 +98,8 @@ function search() {
                 })
                 .join('');
         }
-    }, 500)
+    }, 500);
 }
 
 renderCartNumber(CartLocal);
-renderDeal(dealPhone);
+renderPhone(Phone);

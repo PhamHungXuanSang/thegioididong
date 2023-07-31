@@ -1,5 +1,4 @@
 // Handle header cart number display
-// localStorage.setItem('CartData', JSON.stringify(Cart));
 var CartLocal = JSON.parse(localStorage.getItem('CartData'));
 var totalProducts = 0;
 if (CartLocal.length > 0) {
@@ -31,6 +30,57 @@ const renderProductImg = () => {
     document.querySelector('.wrapperSlide').innerHTML = img;
 };
 renderProductImg(product);
+
+const renderProductInfo = (product) => {
+    document.querySelector('.info-wrapper').innerHTML = `<div class="detail" style="display: flex">
+    <div style="flex: 1">
+        <div style="font-size: 24px; color: #fff; margin: 8px 0">Online giá rẻ quá</div>
+        <div style="color: #ffd028; font-size: 20px; font-weight: 600; margin: 8px 0">${product.newPrice.toLocaleString() + ' đ'}</div>
+        <div style="color: #fff; margin: 8px 0">${product.oldPrice.toLocaleString() + ' đ'} (-${100 - 100 * (product.newPrice / product.oldPrice).toFixed(2)}%)</div>
+    </div>
+    <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center">
+        <p style="margin-top: 12px; color: #fff; font-weight: 600">Kết thúc sau</p>
+        <div style="margin-bottom: 12px" class="header__main-countdown-time">
+            <div style="background-color: #fff; color: #f86962; font-weight: 500" class="hour"></div>
+            <div style="background-color: #fff; color: #f86962; font-weight: 500" class="minute"></div>
+            <div style="background-color: #fff; color: #f86962; font-weight: 500" class="second"></div>
+        </div>
+    </div>
+</div>
+<div style="background-color: #fff; border-radius: 16px; padding: 16px 8px; margin: 16px 0">
+    <p style="margin-bottom: 8px; font-weight: 600">Khuyến mãi:</p>
+    <p style="margin-bottom: 8px">1. Nhập mã GIAMGIA100 giảm tối đa 100.000đ đối với đơn hàng có giá trị trên 5.000.000đ.</p>
+    <p>2. Tặng voucher mua hàng trị giá 50.000đ khi mua hàng vào lần sau.</p>
+</div>`;
+};
+renderProductInfo(product);
+
+// Handle countdown timer
+function pad(num) {
+    num = num.toString();
+    while (num.length < 2) num = '0' + num;
+    return num;
+}
+
+const countdown = () => {
+    const day = new Date().getDate();
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    const endDeal = new Date(`${month} ${day} ${year} 24:00`).getTime();
+    const now = new Date().getTime();
+    const timeLeft = endDeal - now;
+
+    const hourLeft = Math.floor(timeLeft / 3600000);
+    document.querySelector('.hour').innerHTML = pad(hourLeft);
+    const minuteLeft = Math.floor((timeLeft - hourLeft * 3600000) / 60000);
+    document.querySelector('.minute').innerHTML = pad(minuteLeft);
+    const secondLeft = Math.floor((timeLeft - hourLeft * 3600000 - minuteLeft * 60000) / 1000);
+    document.querySelector('.second').innerHTML = pad(secondLeft);
+};
+countdown();
+setInterval(() => {
+    countdown();
+}, 1000);
 
 // handle quantity
 window.handleQuantityMinus = function () {
