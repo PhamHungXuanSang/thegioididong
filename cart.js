@@ -1,3 +1,4 @@
+import { Phone } from './Data.js';
 const render = (Cart) => {
     var totalProducts = 0;
     var totalPrice = 0;
@@ -110,7 +111,15 @@ window.closeForm = function () {
     document.querySelector('body').removeChild(overlay);
 };
 
+// Onclick push phone to productDetail obj
+window.pushPhone = function (index) {
+    localStorage.setItem('productDetail', JSON.stringify(Phone[index]));
+};
+
+var inputSearch = document.querySelector('.header__top-search-input');
+inputSearch.addEventListener('keyup', search);
 function search() {
+    var searchResult = document.querySelector('.header__top-search-result');
     setTimeout(() => {
         const searchValue = inputSearch.value.toUpperCase();
         const filterData = Phone.filter((item) => {

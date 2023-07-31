@@ -1,3 +1,4 @@
+import { Phone } from './Data.js';
 // Handle header cart number display
 var CartLocal = JSON.parse(localStorage.getItem('CartData'));
 var totalProducts = 0;
@@ -141,7 +142,15 @@ function toast({ title = '', message = '', type = '', duration = 3000 }) {
     main.appendChild(toast);
 }
 
+// Onclick push phone to productDetail obj
+window.pushPhone = function (index) {
+    localStorage.setItem('productDetail', JSON.stringify(Phone[index]));
+};
+
+var inputSearch = document.querySelector('.header__top-search-input');
+inputSearch.addEventListener('keyup', search);
 function search() {
+    var searchResult = document.querySelector('.header__top-search-result');
     setTimeout(() => {
         const searchValue = inputSearch.value.toUpperCase();
         const filterData = Phone.filter((item) => {
