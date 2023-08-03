@@ -254,10 +254,13 @@ export default function Slider(selector = '#sliderLibrary', config) {
             wrapper.addEventListener('mouseout', function () {
                 mirror.style.display = 'none';
             });
+            wrapper.addEventListener('mouseenter', function () {
+                mirror.style.display = 'block';
+            });
             wrapper.addEventListener('mousemove', function (e) {
-                mirror.style = `display:block;position:fixed;pointer-events:none;transform:translate(-50%, -50%);width:${imgWidthArr[currentIndex] / 5}px;height:${config.height / 5}px;background-image:url('${imgElementArr[currentIndex].src}');background-size:${imgWidthArr[currentIndex] * 1.5}px ${
+                mirror.style = `position:fixed;pointer-events:none;transform:translate(-50%, -50%);width:${imgWidthArr[currentIndex] / 5}px;height:${config.height / 5}px;background-image:url('${imgElementArr[currentIndex].src}');background-size:${imgWidthArr[currentIndex] * 1.5}px ${
                     config.height * 1.5
-                }px;background-repeat:no-repeat;`;
+                }px;background-repeat:no-repeat;border: 0.5px solid black`;
                 let heightSlide = wrapper.offsetHeight; // Chiều cao slide
 
                 let elementRect = imgElementArr[currentIndex].getBoundingClientRect(),

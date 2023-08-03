@@ -19,7 +19,7 @@ const render = (Cart) => {
                     <a href="index.html" class="cart__backhome"
                         ><i class="fa-solid fa-chevron-left"></i>Mua thêm sản phẩm khác</a
                     >
-                    <p class="cart__nav-title">Giỏ hàng của anh</p>
+                    <p class="cart__nav-title">Giỏ hàng của bạn</p>
                 </div>
                 <div class="cart__products">
                     ${Cart.map((cart, index) => {
