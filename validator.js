@@ -9,6 +9,10 @@ function Validator(formSelector) {
     }
 
     var formElement = document.querySelector(`${formSelector}`);
+    if (!formElement) {
+        console.log(`Không tìm thấy ${formSelector} selector`);
+        return;
+    }
     var formRules = {};
 
     // Tạo custom rule
@@ -24,7 +28,7 @@ function Validator(formSelector) {
                 return undefined;
             } else return 'Họ và Tên không đúng';
         },
-        number: function (value) {
+        phoneNumber: function (value) {
             return !isNaN(value) && value[0] == 0 ? undefined : 'Số điện thoại không hợp lệ';
         },
         min: function (min) {
@@ -39,10 +43,6 @@ function Validator(formSelector) {
         },
     };
 
-    if (!formElement) {
-        console.log(`Không tìm thấy ${formSelector} selector`);
-        return;
-    }
     // Lấy ra tất cả những thẻ input có atribute name và rules
     var inputs = formElement.querySelectorAll('[name][rules]');
     // Lặp qua NodeList inputs

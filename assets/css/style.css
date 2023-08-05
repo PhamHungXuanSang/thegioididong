@@ -963,7 +963,6 @@ input:checked ~ .checkmark:after {
     margin-bottom: 16px;
 }
 
-.form-label,
 .form-message {
     text-align: left;
 }

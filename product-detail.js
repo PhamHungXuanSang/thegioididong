@@ -48,6 +48,13 @@ const renderProductInfo = (product) => {
         </div>
     </div>
 </div>
+<div style="display:flex;margin-top:8px;">
+    ${product.color
+        .map((it) => {
+            return `<div style='padding:8px 16px;background-color:#fff;border-radius:3px;margin-right:8px;border:2px solid black;color:black'>${it[0]}</div>`;
+        })
+        .join('')}
+</div>
 <div style="background-color: #fff; border-radius: 16px; padding: 16px 8px; margin: 16px 0">
     <p style="margin-bottom: 8px; font-weight: 600">Khuyến mãi:</p>
     <p style="margin-bottom: 8px">1. Nhập mã GIAMGIA100 giảm tối đa 100.000đ đối với đơn hàng có giá trị trên 5.000.000đ.</p>
@@ -182,7 +189,7 @@ function search() {
 window.handleAddCart = function () {
     var isAdded = false;
     var isDuplicate = false;
-    CartLocal.map((CartItem) => {
+    CartLocal.forEach((CartItem) => {
         if (CartItem.id == product.id) {
             // neu isDuplicate thi them
             isDuplicate = true;
@@ -192,7 +199,7 @@ window.handleAddCart = function () {
                 localStorage.setItem('CartData', JSON.stringify(CartLocal));
             } else {
                 isAdded = false;
-                toast({ title: 'Thất bại', message: `Chọn tối đa 5 sản phẩm`, type: 'error', duration: 5000 });
+                toast({ title: 'Thất bại', message: `Có thể thêm tối đa ${5 - CartItem.quantity} sản phẩm`, type: 'error', duration: 5000 });
             }
         }
     });

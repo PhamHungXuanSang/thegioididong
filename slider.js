@@ -93,7 +93,7 @@ export default function Slider(selector = '#sliderLibrary', config) {
     let slideCount = list.length; // Tổng số slide
     if (slideCount > 1 && config.slidesPerView < slideCount) btnRight.style.display = 'block';
     // Lặp qua và css cho từng phần tử
-    let imgWidthArr = [],
+    var imgWidthArr = [],
         imgElementArr = [];
     list.forEach((item, index) => {
         item.classList.add(index);
@@ -254,13 +254,10 @@ export default function Slider(selector = '#sliderLibrary', config) {
             wrapper.addEventListener('mouseout', function () {
                 mirror.style.display = 'none';
             });
-            wrapper.addEventListener('mouseenter', function () {
-                mirror.style.display = 'block';
-            });
             wrapper.addEventListener('mousemove', function (e) {
-                mirror.style = `position:fixed;pointer-events:none;transform:translate(-50%, -50%);width:${imgWidthArr[currentIndex] / 5}px;height:${config.height / 5}px;background-image:url('${imgElementArr[currentIndex].src}');background-size:${imgWidthArr[currentIndex] * 1.5}px ${
+                mirror.style = `display:block;position:fixed;pointer-events:none;transform:translate(-50%, -50%);width:${imgWidthArr[currentIndex] / 5}px;height:${config.height / 5}px;background-image:url('${imgElementArr[currentIndex].src}');background-size:${imgWidthArr[currentIndex] * 1.5}px ${
                     config.height * 1.5
-                }px;background-repeat:no-repeat;border: 0.5px solid black`;
+                }px;background-repeat:no-repeat;border: 1px solid black`;
                 let heightSlide = wrapper.offsetHeight; // Chiều cao slide
 
                 let elementRect = imgElementArr[currentIndex].getBoundingClientRect(),
